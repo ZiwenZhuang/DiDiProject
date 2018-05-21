@@ -12,6 +12,9 @@ int main() {
     string one_line;
     order >> one_line;
     printf(one_line.data()); printf("\n");
+    
+    order >> one_line;
+    printf(one_line.data()); printf("\n");
 
     printf("press any key and Enter to quit\n");
     char q;

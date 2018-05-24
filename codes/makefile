@@ -1,7 +1,7 @@
 # This file is used to make executable on ubuntu platform.
 
 CC=g++
-GFLAGS= -o main.out -std=g++11
+GFLAGS= -o main.out -std=c++11
 
 make: clean
 	$(CC) $(GFLAGS) main.cpp

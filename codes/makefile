@@ -8,5 +8,5 @@ make: clean
 
 clean:
 ifneq ("$(wildcard ./main.out)", "")
-	rm make.out
+	rm main.out
 endif

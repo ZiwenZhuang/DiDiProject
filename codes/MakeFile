@@ -7,6 +7,6 @@ make: clean
 	{CC} {GFLAGS} main.cpp
 
 clean:
-ifneq ("$(wildcard "main.out"), "")
+ifneq ("$(wildcard "main.out")", "")
 	rm make.out
 endif

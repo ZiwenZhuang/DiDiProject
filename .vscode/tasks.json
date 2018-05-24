@@ -8,7 +8,7 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "-o main.exe",
+                "-o ./codes/main.exe",
                 "-g ./codes/main.cpp",
             ],
             "group": {

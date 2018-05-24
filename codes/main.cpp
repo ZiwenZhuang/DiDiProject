@@ -7,7 +7,7 @@ using namespace std;
 int main() {
     cout << "start the program\n";
 
-    fstream order; order.open("./data/order_20161101", ios_base::in);
+    fstream order; order.open("../data/order_20161101", ios_base::in);
 
     string one_line;
     order >> one_line;

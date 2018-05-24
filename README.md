@@ -10,3 +10,6 @@ After you clone the repo, please add the data file to the /data folder.
 
 2. The path object
   It is designed to standarlize the paths in the gps file, which simplifies all the gps information into a graph. (Maybe represented in a adjacent list)
+
+3. The order object
+  It is used to store the order, start point, end point, path and the time stamps.

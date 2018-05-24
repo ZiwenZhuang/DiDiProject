@@ -11,10 +11,10 @@ int main() {
 
     string one_line;
     order >> one_line;
-    printf(one_line.data()); printf("\n");
+    cout << one_line.data() << endl;
     
     order >> one_line;
-    printf(one_line.data()); printf("\n");
+    cout << one_line.data() << endl;
 
     printf("press any key and Enter to quit\n");
     char q;

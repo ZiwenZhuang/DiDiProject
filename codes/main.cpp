@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    printf("start the program\n");
+    cout << "start the program\n";
 
     fstream order; order.open("./data/order_20161101", ios_base::in);
 

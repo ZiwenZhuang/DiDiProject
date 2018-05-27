@@ -11,11 +11,11 @@ int main() {
     fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
 
     string one_line;
-    getline(gps_file, one_line);
-    cout << one_line << endl;
-    
-    getline(gps_file, one_line);
-    cout << one_line << endl;
+    fstream& file2read = order_file;
+    for (int i = 0; i < 12; i++) {
+        getline(file2read, one_line);
+        cout << one_line << endl;
+    }
 
     printf("press any key and Enter to quit\n");
     char q;

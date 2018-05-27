@@ -7,13 +7,14 @@ using namespace std;
 int main() {
     cout << "start the program\n";
 
-    fstream order; order.open("../data/order_20161101", ios_base::in);
+    fstream order_file; order_file.open("../data/order_20161101", ios_base::in);
+    fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
 
     string one_line;
-    order >> one_line;
+    getline(gps_file, one_line);
     cout << one_line << endl;
     
-    order >> one_line;
+    getline(gps_file, one_line);
     cout << one_line << endl;
 
     printf("press any key and Enter to quit\n");

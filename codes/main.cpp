@@ -10,10 +10,9 @@ int main() {
     //fstream order_file; order_file.open("../data/order_20161101", ios_base::in);
     fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
 
-    string one_line;
-    fstream& file2read = gps_file;
+    string one_line = "";
     for (int i = 0; i < 12; i++) {
-        file2read >> one_line;
+        gps_file >> one_line;
         cout << "Read one Line |" << one_line << endl;
     }
 

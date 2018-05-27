@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/codes/main.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/codes",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",

@@ -7,7 +7,7 @@
 using namespace std;
 
 /* This function is designed to read a line of string through the given
-file stream, which means you have to open the file at first.
+file stream, which means you have to open the file before calling it.
 */
 string read_a_line(fstream& file) {
     if (!file.is_open()) {
@@ -28,7 +28,7 @@ int main() {
         cout << read_a_line(gps_file) << endl;
     }
 
-    printf("press any key and Enter to quit\n");
+    printf("The program ends\n\tpress any key and Enter to quit\n");
     char q; cin >> q;
     order_file.close(); gps_file.close();
     return 0;

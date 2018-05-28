@@ -2,7 +2,21 @@
 #include <string>
 #include <fstream>
 
+#include "included/convolution.h"
+
 using namespace std;
+
+/* This function is designed to read a line of string through the given
+file stream, which means you have to open the file at first.
+*/
+string read_a_line(fstream& file) {
+    if (!file.is_open()) {
+        fprintf(stderr, "Error detected, in read_a_line(): the fstream to read is not open yet\n");
+    }
+    string one_line;
+    getline(file, one_line);
+    return one_line;
+}
 
 int main() {
     cout << "start the program\n";
@@ -10,10 +24,8 @@ int main() {
     fstream order_file; order_file.open("../data/order_20161101", ios_base::in);
     fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
 
-    string one_line;
     for (int i = 0; i < 12; i++) {
-        gps_file >> one_line;
-        cout << "Read one Line |" << one_line << endl;
+        cout << read_a_line(gps_file) << endl;
     }
 
     printf("press any key and Enter to quit\n");

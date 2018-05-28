@@ -1,4 +1,9 @@
 {
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "istream": "cpp",
+        "*.tcc": "cpp",
+        "fstream": "cpp"
+    }
 }

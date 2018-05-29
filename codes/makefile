@@ -4,8 +4,7 @@ CC=g++
 GFLAGS= -o main.out -std=c++11
 PFLAGS= -std=c++11
 make: clean
-	$(CC) $(GFLAGS) main.cpp
-	$(CC) 
+	$(CC) $(GFLAGS) main.cpp 
 pixel: pixel.cpp
 	$(CC) $(PFLAGS) -o pixel pixel.cpp
 clean:

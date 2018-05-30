@@ -30,3 +30,11 @@ template <class T> T* Matrix::operator[](uint row_index) {
     }
     return this->data + this->num_cols * row_index;
 }
+// matrix assignment
+template <class T> Matrix& Matrix::operator=(const Matrix& other) {
+    this->num_rows = other.num_rows;
+    this->num_cols = other.num_cols;
+    this->data = new T [this->num_rows * this->num_cols];
+    memcpy(this->data, other.data, this->num_rows * this->num_cols * sizeof(T));
+    return *this;
+}

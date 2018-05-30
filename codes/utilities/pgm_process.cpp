@@ -11,23 +11,25 @@ bool check_mode(string &a_line) {
     return true;
 }
 
-int read_image(Matrix<uint> &target, string &filename) {
-    ifstream fileIn; fileIn.open(filename.c_str(), ios_base::in);
-    string a_line; getline(fileIn, a_line);
+template <class T> int read_image(Matrix<T> &target, string &filename) {
+    ifstream file; file.open(filename.c_str(), ios_base::in);
+    string a_line; getline(file, a_line);
     // check mode
     if (!check_mode(a_line)) return -1;
     // read matrix size
-    fileIn >> target.num_rows; fileIn >> target.num_cols;
+    file >> target.num_rows; file >> target.num_cols;
     // read data as uint
     uint total = target.num_rows * target.num_cols;
     uint* array = new uint [total];
-    for (uint i = 0; i < total; i++) {
-        uint value; fileIn >> value;
-        target[0][i] = value;
+    for (uint i = 0; i < num_cols; i++) {
+        getline(file, a_line); stringstream ss (a_line);
+        for (uint j = 0; j < num_rows; j++) {
+            ss >> target[j][i];
+        }
     }
     return 0;
 }
-int read_image(Matrix<uint> &target, ifstream &file) {
+template <class T> int read_image(Matrix<T> &target, ifstream &file) {
     if (!file.is_open()) {
         fprintf(stderr, "Error detected in read_image, your provided a un-opened file stream");
         return -1;
@@ -40,13 +42,15 @@ int read_image(Matrix<uint> &target, ifstream &file) {
     // read data as uint
     uint total = target.num_rows * target.num_cols;
     uint* array = new uint [total];
-    for (uint i = 0; i < total; i++) {
-        uint value; file >> value;
-        target[0][i] = value;
+    for (uint i = 0; i < num_cols; i++) {
+        getline(file, a_line); stringstream ss (a_line);
+        for (uint j = 0; j < num_rows; j++) {
+            ss >> target[j][i];
+        }
     }
     return 0;
 }
-int read_image(Matrix<uint> &target, fstream &file) {
+template <class T> int read_image(Matrix<T> &target, fstream &file) {
     if (!file.is_open()) {
         fprintf(stderr, "Error detected in read_image, your provided a un-opened file stream");
         return -1;
@@ -59,9 +63,26 @@ int read_image(Matrix<uint> &target, fstream &file) {
     // read data as uint
     uint total = target.num_rows * target.num_cols;
     uint* array = new uint [total];
-    for (uint i = 0; i < total; i++) {
-        uint value; file >> value;
-        target[0][i] = value;
+    for (uint i = 0; i < num_cols; i++) {
+        getline(file, a_line); stringstream ss (a_line);
+        for (uint j = 0; j < num_rows; j++) {
+            ss >> target[j][i];
+        }
+    }
+    return 0;
+}
+
+template <class T> int write_image(Matrix<T> &target, string &filename) {
+    if (!target.initialized()) {
+        fprintf(stderr, "Error dected, you let me write a matrix that has no data");
+        return -1;
+    }
+    string to_write
+    ofstream file; file.open(filename.c_str(), ios_base::out);
+    for (uint i = 0; i < num_cols; i++) {
+        for (uint j = 1; j < num_rows; j++) {
+            file << target[j][i] << "\t";
+        }
     }
     return 0;
 }

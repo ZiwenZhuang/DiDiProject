@@ -5,12 +5,12 @@ template <class T> Matrix::Matrix() {
     this->num_rows = 0; this->num_cols = 0;
     this->data = nullptr;
 }
-template <class T> Matrix::Matrix(uint num_rows, uint num_cols) {
+template <class T> Matrix::Matrix(unsigned int num_rows, unsigned int num_cols) {
     this->num_rows = num_rows;
     this->num_cols = num_cols;
     this->data = nullptr;
 }
-template <class T> Matrix::Matrix(uint num_rows, uint num_cols, T* data) {
+template <class T> Matrix::Matrix(unsigned int num_rows, unsigned int num_cols, T* data) {
     this->num_rows = num_rows;
     this->num_cols = num_cols;
     this->data = data;
@@ -18,6 +18,10 @@ template <class T> Matrix::Matrix(uint num_rows, uint num_cols, T* data) {
 template <class T> Matrix::~Matrix() {
     delete[] this->data;
 }
+template <class T> bool Matrix::initialized() {
+    return (!(this->data == nullptr));
+}
+
 // setting data
 template <class T> void Matrix::set_data(T* data) {
     if (this->data != nullptr) {
@@ -27,7 +31,7 @@ template <class T> void Matrix::set_data(T* data) {
     this->data = data;
 }
 // access entry
-template <class T> T* Matrix::operator[](uint row_index) {
+template <class T> T* Matrix::operator[](unsigned int row_index) {
     if (row_index >= this->num_rows) {
         stderr << "Error detected when using operator[]: to large on the first index";
         return nullptr;

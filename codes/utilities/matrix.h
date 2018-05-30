@@ -4,13 +4,14 @@ the matrix.
 libraries could be to complex for this project, we only implement
 some basic functions.
 */
+#include <iostream>
 
 template <class T>
 class Matrix {
     private:
         T* data; // row expanded
-        uint num_rows;
-        uint num_cols;
+        unsigned int num_rows;
+        unsigned int num_cols;
     public:
         /* When using constructor, you can set the content later or set
         the content in row expanded form (put the data in a signle array).
@@ -18,26 +19,27 @@ class Matrix {
         remember that you have handed over the ownership of the data, which will
         be freed (using delete operation) when disconstructing the Matrix instance.
         */
-        Matrix():
-        Matrix(uint num_rows, uint num_cols);
-        Matrix(uint num_rows, uint num_cols, T* data);
+        Matrix();
+        Matrix(unsigned int num_rows, unsigned int num_cols);
+        Matrix(unsigned int num_rows, unsigned int num_cols, T* data);
         ~Matrix();
+        bool initialized();
 
         /* You can add data after construction or cover the old data.
             Since you pass with a pointer, we cannot check if the matrix size is
         valid, you have to check it on your own.
         */
-        void set_data(T* data);
+        void set_data(T*);
 
         /* The method returns a pointer to the row, which means you can possibly
         access the entries in the next rows, which might cause some unexpected
         problem.
         */
-        T* operator[](uint row_index);
+        T* operator[](unsigned int);
 
         /* When assign a matrix to another matrix (constructed by the default
         constructor) the data attributes will be copied. So, be sure to implement
         copy behavior on object T.
         */
-        Matrix& operator=(const Matrix& other);
-}
+        Matrix& operator=(const Matrix &other);
+};

@@ -7,6 +7,7 @@ and the smallest value of the matrix.
 */
 #include <fstream>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -21,8 +22,14 @@ namespace pgm_ASCII {
         The return value indicates whether the read process is sucessful,
             0 is sucessful; -1 is error occurred;
     */
-    int read_image(Matrix& target, string &filename);
-    int read_image(Matrix& target, ifstream &file);
-    int read_image(Matrix& target, fstream &file);
+    template <class T> int read_image(Matrix<T> &target, string &filename);
+    template <class T> int read_image(Matrix<T> &target, ifstream &file);
+    template <class T> int read_image(Matrix<T> &target, fstream &file);
 
+    /* These methods will write the given matrix into the file once.
+        Also, it returns 0 on sucess; -1 on failed;
+        And you are only allowed to provide the file name instead of any form of
+    file stream.
+    */
+    template <class T> int write_image(Matrix<T> &target, string &filename);
 }

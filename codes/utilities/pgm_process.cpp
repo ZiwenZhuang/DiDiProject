@@ -77,11 +77,12 @@ template <class T> int write_image(Matrix<T> &target, string &filename) {
         fprintf(stderr, "Error dected, you let me write a matrix that has no data");
         return -1;
     }
-    string to_write
     ofstream file; file.open(filename.c_str(), ios_base::out);
-    for (uint i = 0; i < num_cols; i++) {
+    file << "P2\n" << target.rows << " " << target.cols;
+    for (uint i = 1; i < num_cols; i++) {
+        file << endl << target[0][i];
         for (uint j = 1; j < num_rows; j++) {
-            file << target[j][i] << "\t";
+            file << "\t" << target[j][i];
         }
     }
     return 0;

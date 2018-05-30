@@ -18,6 +18,7 @@ class Matrix {
         remember that you have handed over the ownership of the data, which will
         be freed (using delete operation) when disconstructing the Matrix instance.
         */
+        Matrix():
         Matrix(uint num_rows, uint num_cols);
         Matrix(uint num_rows, uint num_cols, T* data);
         ~Matrix();

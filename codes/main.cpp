@@ -4,6 +4,7 @@
 
 #include "included/convolution.h"
 #include "utilities/pgm_process.h"
+#include "utilities/matrix.h"
 
 using namespace std;
 

@@ -5,7 +5,10 @@ libraries could be to complex for this project, we only implement
 some basic functions.
 */
 #include <iostream>
+#include <fstream>
 
+#ifndef MATRIX_DEF
+#define MATRIX_DEF
 template <class T>
 class Matrix {
     private:
@@ -28,8 +31,15 @@ class Matrix {
         /* You can add data after construction or cover the old data.
             Since you pass with a pointer, we cannot check if the matrix size is
         valid, you have to check it on your own.
+            You cannot set the number of rows and columns after the matrix's data
+        is set.
         */
         void set_data(T*);
+        void setRowNum(unsigned int num);
+        void setColNum(unsigned int num);
+        T* get_data();
+        unsigned int getRowNum();
+        unsigned int getColNum();
 
         /* The method returns a pointer to the row, which means you can possibly
         access the entries in the next rows, which might cause some unexpected
@@ -43,3 +53,9 @@ class Matrix {
         */
         Matrix& operator=(const Matrix &other);
 };
+
+// Read and write matrix to file, since the pgm file might loss some of the details.
+template <class T> int writeMatrix(string filename, Matrix<T> &target);
+template <class T> int readMatrix(string filename, Matrix<T> &target);
+
+#endif

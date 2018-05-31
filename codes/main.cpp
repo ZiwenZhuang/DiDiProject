@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 
-#include "included/convolution.h"
+#include "utilities/imageProcess.h"
 #include "utilities/pgm_process.h"
 #include "utilities/matrix.h"
 

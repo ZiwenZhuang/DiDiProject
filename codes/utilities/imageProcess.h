@@ -9,4 +9,4 @@ and help doing convolution.
 too big, or there will be an overflow when converting unsigned int to
 int.
 */
-Matrix& sharpen_matrix(Matrix &mat_in, Matrix &mat_out);
+Matrix<int>& sharpen_matrix(Matrix<int> &mat_in, Matrix<int> &mat_out);

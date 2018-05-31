@@ -1,6 +1,6 @@
 #include "imageProcess.h"
 
-Matrix& sharpen_matrix(Matrix<int> &mat_in, Matrix<int> &mat_out) {
+Matrix<int>& sharpen_matrix(Matrix<int> &mat_in, Matrix<int> &mat_out) {
     int kernel_size_x = 3;
     int kernel_size_y = 3;
     float kernel[] = {

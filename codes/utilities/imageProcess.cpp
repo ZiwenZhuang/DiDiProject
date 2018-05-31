@@ -9,6 +9,8 @@ Matrix& sharpen_matrix(Matrix<int> &mat_in, Matrix<int> &mat_out) {
         -1, 2,  -1
     };
     int* data_out = new int [mat_in.getRowNum() * mat_in.getColNum()];
+
+    // perform convolution and check if it is sucess to store the result.
     if (convolve2D(mat_in.get_data(), data_out, mat_in.getRowNum(), mat_in.getColNum(),\
     kernel + 4, kernel_size_x, kernel_size_y)) {
         mat_out.setRowNum(mat_in.getRowNum());

@@ -34,7 +34,7 @@ namespace pgm_ASCII {
         And you are only allowed to provide the file name instead of any form of
     file stream.
     */
-    template <class T> int write_image(Matrix<T> &target, string &filename);
+    template <class T> int write_image(Matrix<T> &target, string filename);
 }
 
 #endif

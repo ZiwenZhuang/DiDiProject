@@ -72,9 +72,9 @@ template <class T> int read_image(Matrix<T> &target, fstream &file) {
     return 0;
 }
 
-template <class T> int write_image(Matrix<T> &target, string &filename) {
+template <class T> int write_image(Matrix<T> &target, string filename) {
     if (!target.initialized()) {
-        fprintf(stderr, "Error dected, you let me write a matrix that has no data");
+        fprintf(stderr, "Error detected, you let me write a matrix that has no data");
         return -1;
     }
     ofstream file; file.open(filename.c_str(), ios_base::out);

@@ -1,6 +1,4 @@
-#include <iostream>
-#include <string>
-#include <fstream>
+#include "pixel.h"
 
 using namespace std;
 /* Type could be double or int, double for gps, int for map */
@@ -33,7 +31,7 @@ string read_a_line(fstream& file) {
     return one_line;
 }
 /* sw-- south west point; se-- south east point; nw-- north west point; pixelx/pixely is the pixel informarion(x*y) */
-int * pixel(fstream& file,point<double> sw, point<double> se,point<double> nw,int pixelx,int pixely){
+int * pixel(fstream& file,int pixelx,int pixely){
 	int* map;
 	int i=0;
 	string lo;
@@ -41,6 +39,15 @@ int * pixel(fstream& file,point<double> sw, point<double> se,point<double> nw,in
 	string one_line;
 	point<int>* P;
 	point<double> L;
+	point<double> sw;
+	point<double> se;
+	point<double> nw;
+	sw.longitude=104.042140;
+	sw.latitude=30.652940;
+	se.longitude=104.129580;
+	se.latitude=30.652940;
+	nw.longitude=104.042140;
+	nw.latitude=30.727750;
 	map=new int [pixelx*pixely];
 	for (i=0;i< pixelx*pixely;i++){
 		map[i]=0;
@@ -58,25 +65,3 @@ int * pixel(fstream& file,point<double> sw, point<double> se,point<double> nw,in
 	return map;
 
 }
-int main(){
-	return 0;
-}
-/*int main(){
-	int * map;
-	point<double> sw;
-	point<double> se;
-	point<double> nw;
-	int c;
-	fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
-	sw.longitude=104.042140;
-	sw.latitude=30.652940;
-	se.longitude=104.129580;
-	se.latitude=30.652940;
-	nw.longitude=104.042140;
-	nw.latitude=30.727750;
-	map=pixel(gps_file,sw,se,nw,1024,1024);
-	for (int i=0;i<1024*1024;i++){
-		printf("%d\n",map[i] );
-	}
-	return 0;
-}*/

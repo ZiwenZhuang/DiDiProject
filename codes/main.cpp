@@ -5,6 +5,7 @@
 #include "utilities/imageProcess.h"
 #include "utilities/pgm_process.h"
 #include "utilities/matrix.h"
+#include "utilities/pixel.h"
 
 using namespace std;
 

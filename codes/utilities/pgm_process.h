@@ -5,16 +5,16 @@ file, where the mode has to be "P2".
     In the given matrix, you don't have to normalize it, just give the greatest
 and the smallest value of the matrix.
 */
+#ifndef pgm_ASCII
+#define pgm_ASCII
+
 #include <fstream>
 #include <string>
 #include <sstream>
 
-using namespace std;
-
 #include "matrix.h"
 
-#ifndef pgm_ASCII
-#define pgm_ASCII
+using namespace std;
 
 namespace pgm_ASCII {
 

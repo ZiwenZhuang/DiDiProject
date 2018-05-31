@@ -4,11 +4,15 @@ the matrix.
 libraries could be to complex for this project, we only implement
 some basic functions.
 */
-#include <iostream>
-#include <fstream>
-
 #ifndef MATRIX_DEF
 #define MATRIX_DEF
+
+#include <iostream>
+#include <string>
+#include <fstream>
+
+using namespace std;
+
 template <class T>
 class Matrix {
     private:
@@ -55,7 +59,7 @@ class Matrix {
 };
 
 // Read and write matrix to file, since the pgm file might loss some of the details.
-template <class T> int writeMatrix(string filename, Matrix<T> &target);
-template <class T> int readMatrix(string filename, Matrix<T> &target);
+template<class T> int writeMatrix(string filename, Matrix<T> &target);
+template<class T> int readMatrix(string filename, Matrix<T> &target);
 
 #endif

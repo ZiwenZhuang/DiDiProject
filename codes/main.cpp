@@ -27,9 +27,7 @@ int main() {
     fstream order_file; order_file.open("../data/order_20161101", ios_base::in);
     fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
 
-    for (int i = 0; i < 12; i++) {
-        cout << read_a_line(gps_file) << endl;
-    }
+    
 
     printf("The program ends\n\tpress any key and Enter to quit\n");
     char q; cin >> q;

@@ -13,6 +13,9 @@ using namespace std;
 
 #include "matrix.h"
 
+#ifndef pgm_ASCII
+#define pgm_ASCII
+
 namespace pgm_ASCII {
 
     /* This method will read the gray scale image into the defined matrix object.
@@ -33,3 +36,5 @@ namespace pgm_ASCII {
     */
     template <class T> int write_image(Matrix<T> &target, string &filename);
 }
+
+#endif

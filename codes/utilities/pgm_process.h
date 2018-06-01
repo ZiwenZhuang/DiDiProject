@@ -5,8 +5,8 @@ file, where the mode has to be "P2".
     In the given matrix, you don't have to normalize it, just give the greatest
 and the smallest value of the matrix.
 */
-#ifndef pgm_ASCII
-#define pgm_ASCII
+#ifndef pgm_ASCII_H
+#define pgm_ASCII_H
 
 #include <fstream>
 #include <string>

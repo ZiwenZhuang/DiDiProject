@@ -1,64 +1,64 @@
 #include "matrix.h"
 
 // constructor
-template <class T> Matrix::Matrix() {
+template <class T> Matrix<T>::Matrix() {
     this->num_rows = 0; this->num_cols = 0;
     this->data = nullptr;
 }
-template <class T> Matrix::Matrix(unsigned int num_rows, unsigned int num_cols) {
+template <class T> Matrix<T>::Matrix(unsigned int num_rows, unsigned int num_cols) {
     this->num_rows = num_rows;
     this->num_cols = num_cols;
     this->data = nullptr;
 }
-template <class T> Matrix::Matrix(unsigned int num_rows, unsigned int num_cols, T* data) {
+template <class T> Matrix<T>::Matrix(unsigned int num_rows, unsigned int num_cols, T* data) {
     this->num_rows = num_rows;
     this->num_cols = num_cols;
     this->data = data;
 }
-template <class T> Matrix::~Matrix() {
+template <class T> Matrix<T>::~Matrix() {
     if (this->data != nullptr) delete[] this->data;
 }
-template <class T> bool Matrix::initialized() {
+template <class T> bool Matrix<T>::initialized() {
     return (!(this->data == nullptr));
 }
 
 // setting data
-template <class T> void Matrix::set_data(T* data) {
+template <class T> void Matrix<T>::set_data(T* data) {
     if (this->data != nullptr) {
         cout << "Warning: when setting data to matrix, you are about to cover the old data.\n";
         delete[] this->data;
     }
     this->data = data;
 }
-template <class T> void Matrix::setRowNum(unsigned int num) {
+template <class T> void Matrix<T>::setRowNum(unsigned int num) {
     if (!this->initialized()) this->num_rows = num;
 }
-template <class T> void Matrix::setColNum(unsigned int num) {
+template <class T> void Matrix<T>::setColNum(unsigned int num) {
     if (!this->initialized()) this->num_cols = num;
 }
-template <class T> T* Matrix::get_data() {
+template <class T> T* Matrix<T>::get_data() {
     return this->data;
 }
-template <class T> unsigned int Matrix::getRowNum() {
+template <class T> unsigned int Matrix<T>::getRowNum() {
     return this->num_rows;
 }
-template <class T> unsigned int Matrix::getColNum() {
+template <class T> unsigned int Matrix<T>::getColNum() {
     return this->num_cols;
 }
 
 // access entry
-template <class T> T* Matrix::operator[](unsigned int row_index) {
+template <class T> T* Matrix<T>::operator[](unsigned int row_index) {
     if (row_index >= this->num_rows) {
-        stderr << "Error detected when using operator[]: to large on the first index";
+        cerr << "Error detected when using operator[]: to large on the first index";
         return nullptr;
     }
     return this->data + this->num_cols * row_index;
 }
 // matrix assignment
-template <class T> Matrix& Matrix::operator=(const Matrix& other) {
+template <class T> Matrix<T>& Matrix<T>::operator=(const Matrix& other) {
     this->num_rows = other.num_rows;
     this->num_cols = other.num_cols;
-    if（this->data != nullptr) delete[] this->data;
+    if (this->data != nullptr) delete[] this->data;
     this->data = new T [this->num_rows * this->num_cols];
     memcpy(this->data, other.data, this->num_rows * this->num_cols * sizeof(T));
     return *this;
@@ -81,7 +81,7 @@ template <class T> int readMatrix(string filename, Matrix<T> &target) {
         cerr << "Error detected when try to read " << filename << endl;
         return -1;
     } else if (target.initialized()) {
-        cerr << "You cannot have write to a initialized matrix"
+        cerr << "You cannot have write to a initialized matrix";
         return -1;
     }
     string type_name; file >> type_name;

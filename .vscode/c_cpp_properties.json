@@ -5,7 +5,7 @@
             "includePath": [
                 "/usr/include",
                 "/usr/local/include",
-                "${workspaceFolder}"
+                "${workspaceFolder}/codes/utilities"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",

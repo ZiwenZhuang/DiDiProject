@@ -1,5 +1,4 @@
 #include "imageProcess.h"
-#include "matrix.h"
 
 Matrix<int>& sharpen_matrix(Matrix<int> &mat_in, Matrix<int> &mat_out) {
     int kernel_size_x = 3;

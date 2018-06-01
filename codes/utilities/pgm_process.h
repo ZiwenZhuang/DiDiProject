@@ -37,4 +37,6 @@ namespace pgm_ASCII {
     template <class T> int write_image(Matrix<T> &target, string filename);
 }
 
+#include "pgm_process.tpp"
+
 #endif

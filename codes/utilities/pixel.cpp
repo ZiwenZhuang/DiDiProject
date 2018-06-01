@@ -14,7 +14,7 @@ point<int>* location(double lo1,double lo2,double la1, double la2, int pixelx,in
 	return Pmap;
 }
 
-inline string read_a_line(fstream& file) {
+static string read_a_line(fstream& file) {
     if (!file.is_open()) {
         fprintf(stderr, "Error detected, in read_a_line(): the fstream to read is not open yet\n");
     }

@@ -63,6 +63,4 @@ class Matrix {
 template<class T> int writeMatrix(string filename, Matrix<T> &target);
 template<class T> int readMatrix(string filename, Matrix<T> &target);
 
-#include "matrix.cpp"
-
 #endif

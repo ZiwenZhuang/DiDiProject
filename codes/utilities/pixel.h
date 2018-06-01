@@ -5,6 +5,8 @@
 #include <string>
 #include <fstream>
 
+using namespace std;
+
 template <class Type>
 class point{
 public:
@@ -12,6 +14,5 @@ public:
 	Type latitude;
 };
 int * pixel(fstream& file,int pixelx,int pixely);
-
 
 #endif

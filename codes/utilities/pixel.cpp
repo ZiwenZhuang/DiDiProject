@@ -1,13 +1,5 @@
 #include "pixel.h"
 
-using namespace std;
-/* Type could be double or int, double for gps, int for map */
-template <class Type>
-class point{
-public:
-	Type longitude;
-	Type latitude;
-};
 /* lo1/lo2 is longitude, lo1<lo2; la1/la2 is latitude, la1<la2*/
 /* return a point in map*/ 
 point<int>* location(double lo1,double lo2,double la1, double la2, int pixelx,int pixely,point<double> p){
@@ -22,7 +14,7 @@ point<int>* location(double lo1,double lo2,double la1, double la2, int pixelx,in
 	return Pmap;
 }
 
-string read_a_line(fstream& file) {
+inline string read_a_line(fstream& file) {
     if (!file.is_open()) {
         fprintf(stderr, "Error detected, in read_a_line(): the fstream to read is not open yet\n");
     }

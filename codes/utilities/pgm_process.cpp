@@ -18,12 +18,12 @@ template <class T> int read_image(Matrix<T> &target, string &filename) {
     if (!check_mode(a_line)) return -1;
     // read matrix size
     file >> target.num_rows; file >> target.num_cols;
-    // read data as uint
-    uint total = target.num_rows * target.num_cols;
-    uint* array = new uint [total];
-    for (uint i = 0; i < num_cols; i++) {
+    // read data as unsigned int
+    unsigned int total = target.num_rows * target.num_cols;
+    unsigned int* array = new unsigned int [total];
+    for (unsigned int i = 0; i < target.num_cols; i++) {
         getline(file, a_line); stringstream ss (a_line);
-        for (uint j = 0; j < num_rows; j++) {
+        for (unsigned int j = 0; j < target.num_rows; j++) {
             ss >> target[j][i];
         }
     }
@@ -39,12 +39,12 @@ template <class T> int read_image(Matrix<T> &target, ifstream &file) {
     if (!check_mode(a_line)) return -1;
     // read matrix size
     file >> target.num_rows; file >> target.num_cols;
-    // read data as uint
-    uint total = target.num_rows * target.num_cols;
-    uint* array = new uint [total];
-    for (uint i = 0; i < num_cols; i++) {
+    // read data as unsigned int
+    unsigned int total = target.num_rows * target.num_cols;
+    unsigned int* array = new unsigned int [total];
+    for (unsigned int i = 0; i < target.num_cols; i++) {
         getline(file, a_line); stringstream ss (a_line);
-        for (uint j = 0; j < num_rows; j++) {
+        for (unsigned int j = 0; j < target.num_rows; j++) {
             ss >> target[j][i];
         }
     }
@@ -60,12 +60,12 @@ template <class T> int read_image(Matrix<T> &target, fstream &file) {
     if (!check_mode(a_line)) return -1;
     // read matrix size
     file >> target.num_rows; file >> target.num_cols;
-    // read data as uint
-    uint total = target.num_rows * target.num_cols;
-    uint* array = new uint [total];
-    for (uint i = 0; i < num_cols; i++) {
+    // read data as unsigned int
+    unsigned int total = target.num_rows * target.num_cols;
+    unsigned int* array = new unsigned int [total];
+    for (unsigned int i = 0; i < target.num_cols; i++) {
         getline(file, a_line); stringstream ss (a_line);
-        for (uint j = 0; j < num_rows; j++) {
+        for (unsigned int j = 0; j < target.num_rows; j++) {
             ss >> target[j][i];
         }
     }
@@ -79,9 +79,9 @@ template <class T> int write_image(Matrix<T> &target, string filename) {
     }
     ofstream file; file.open(filename.c_str(), ios_base::out);
     file << "P2\n" << target.rows << " " << target.cols;
-    for (uint i = 1; i < num_cols; i++) {
+    for (unsigned int i = 1; i < target.num_cols; i++) {
         file << endl << target[0][i];
-        for (uint j = 1; j < num_rows; j++) {
+        for (unsigned int j = 1; j < target.num_rows; j++) {
             file << "\t" << target[j][i];
         }
     }

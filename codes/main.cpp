@@ -27,7 +27,7 @@ int main() {
     fstream order_file; order_file.open("../data/order_20161101", ios_base::in);
     fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
 
-    Matrix<int> paths_img = Matrix<int>(1080, 720);
+    Matrix<int> paths_img = Matrix<int>(3840, 2160);
     paths_img.set_data(pixel(gps_file, \
         paths_img.getRowNum(), paths_img.getColNum()));
 

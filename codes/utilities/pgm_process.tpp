@@ -83,8 +83,16 @@ namespace pgm_ASCII {
             fprintf(stderr, "Error detected, you let me write a matrix that has no data");
             return -1;
         }
+        // Write basic information first
         ofstream file; file.open(filename.c_str(), ios_base::out);
         file << "P2\n" << target.getRowNum() << " " << target.getColNum();
+        // detect the greatest value
+        int greatest; T* pVal = target.get_data();
+        greatest = *pVal;
+        for (unsigned int i = 1; i < target.getRowNum() * target.getColNum(); i++) {
+            greatest = (greatest < pVal[i])? pVal[i]: greatest;
+        }
+        file << endl << greatest;
         for (unsigned int i = 1; i < target.getColNum(); i++) {
             file << endl << target[0][i];
             for (unsigned int j = 1; j < target.getRowNum(); j++) {

@@ -27,11 +27,16 @@ int main() {
     fstream order_file; order_file.open("../data/order_20161101", ios_base::in);
     fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
 
-    Matrix<int> paths_img = Matrix<int>(3840, 2160);
+    Matrix<int> paths_img = Matrix<int>(480, 320);
     paths_img.set_data(pixel(gps_file, \
         paths_img.getRowNum(), paths_img.getColNum()));
 
     pgm_ASCII::write_image<int>(paths_img, "../data/paths_img.pgm");
+
+    Matrix<int> paths_enhanced;
+    sharpen_matrix(paths_img, paths_enhanced);
+
+    pgm_ASCII::write_image<int>(paths_enhanced, "../data/paths_enhanced.pgm");
 
     printf("The program ends\n\tpress any key and Enter to quit\n");
     char q; cin >> q;

@@ -14,6 +14,10 @@ int.
 */
 Matrix<int>& sharpen_matrix(Matrix<int> &mat_in, Matrix<int> &mat_out);
 
+/* This operation split entries into only 1 and 0
+*/
+Matrix<int>& two_level(Matrix<int> &mat_in, Matrix<int> &mat_out);
+
 #include "imageProcess.tpp"
 
 #endif

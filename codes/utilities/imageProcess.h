@@ -14,6 +14,11 @@ int.
 */
 Matrix<int>& sharpen_matrix(Matrix<int> &mat_in, Matrix<int> &mat_out);
 
+/* Using KNN removal method and try to enhance the paths of all orders,
+see if it can make the path detection easier.
+*/
+Matrix<int>& knn_removal(Matrix<int> &mat_in, Matrix<int> &mat_out);
+
 /* This operation split entries into only 1 and 0
 */
 Matrix<int>& two_level(Matrix<int> &mat_in, Matrix<int> &mat_out);

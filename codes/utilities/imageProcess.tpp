@@ -23,13 +23,18 @@ Matrix<int>& sharpen_matrix(Matrix<int> &mat_in, Matrix<int> &mat_out) {
     return mat_out;
 }
 
+Matrix<int>& knn_removal(Matrix<int> &mat_in, Matrix<int> &mat_out) {
+    return mat_out;
+}
+
 Matrix<int>& two_level(Matrix<int> &mat_in, Matrix<int> &mat_out) {
+    unsigned int threshold = 3; // The threshold that seperate the pixel to 0 or 1.
 	int* data_out = new int [mat_in.getRowNum() * mat_in.getColNum()];
 	mat_out.setRowNum(mat_in.getRowNum()); mat_out.setColNum(mat_in.getColNum());
 	mat_out.set_data(data_out);
 	for (int i = 0; i < mat_in.getRowNum(); i++) {
 		for (int j = 0; j < mat_in.getColNum(); j++) {
-			mat_out[i][j] = (mat_in[i][j] > 200) ? 1 : 0;
+			mat_out[i][j] = (mat_in[i][j] > threshold) ? 1 : 0;
 		}
 	}
 }

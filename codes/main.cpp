@@ -27,21 +27,24 @@ int main() {
     fstream order_file; order_file.open("../data/order_20161101", ios_base::in);
     fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
 
+    // write directly the readin image from Lottie
     Matrix<int> paths_img = Matrix<int>(720, 480);
     paths_img.set_data(pixel(gps_file, \
         paths_img.getRowNum(), paths_img.getColNum()));
-
     pgm_ASCII::write_image<int>(paths_img, "../data/paths_img.pgm");
 
-    Matrix<int> paths_enhanced;
-    sharpen_matrix(paths_img, paths_enhanced);
+    // Using edge detection kernel to enhance the image. The kernel is in the cooresponding function.
+    Matrix<int> temp_img;
+    sharpen_matrix(paths_img, temp_img);
+    pgm_ASCII::write_image<int>(temp_img, "../data/paths_enhanced.pgm");
 
-    pgm_ASCII::write_image<int>(paths_enhanced, "../data/paths_enhanced.pgm");
+    // // Using KNN removal method try to make the process clear.
+    // knn_removal(path_img, tmp_img);
+    // pgm_ASCII::write_image<int>(temp_img, "../data/knn_removal_result.pgm");
 
-    Matrix<int> two_lv;
-    two_level(paths_img, two_lv);
-
-    pgm_ASCII::write_image<int>(two_lv, "../data/two_level.pgm");
+    // Set the image with only two value either 0 or 1, the threshold is in the function.
+    two_level(paths_img, tmp_img);
+    pgm_ASCII::write_image<int>(tmp_img, "../data/two_level.pgm");
 
     printf("The program ends\n\tpress any key and Enter to quit\n");
     char q; cin >> q;

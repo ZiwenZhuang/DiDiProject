@@ -43,8 +43,8 @@ int main() {
     // pgm_ASCII::write_image<int>(temp_img, "../data/knn_removal_result.pgm");
 
     // Set the image with only two value either 0 or 1, the threshold is in the function.
-    two_level(paths_img, tmp_img);
-    pgm_ASCII::write_image<int>(tmp_img, "../data/two_level.pgm");
+    two_level(paths_img, temp_img);
+    pgm_ASCII::write_image<int>(temp_img, "../data/two_level.pgm");
 
     printf("The program ends\n\tpress any key and Enter to quit\n");
     char q; cin >> q;

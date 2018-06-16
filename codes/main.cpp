@@ -38,13 +38,15 @@ int main() {
     sharpen_matrix(paths_img, temp_img);
     pgm_ASCII::write_image<int>(temp_img, "../data/paths_enhanced.pgm");
 
-    // // Using KNN removal method try to make the process clear.
-    // knn_removal(path_img, tmp_img);
-    // pgm_ASCII::write_image<int>(temp_img, "../data/knn_removal_result.pgm");
 
     // Set the image with only two value either 0 or 1, the threshold is in the function.
     two_level(paths_img, temp_img);
-    pgm_ASCII::write_image<int>(temp_img, "../data/two_level.pgm");
+    // // Using KNN removal method try to make the process clear.
+    Matrix<int> tempp_img;
+    sharpen_matrix(paths_img, tempp_img);
+     knn_removal(temp_img, tempp_img);
+     pgm_ASCII::write_image<int>(tempp_img, "../data/knn_removal_result.pgm");
+    //pgm_ASCII::write_image<int>(temp_img, "../data/two_level.pgm");
 
     printf("The program ends\n\tpress any key and Enter to quit\n");
     char q; cin >> q;

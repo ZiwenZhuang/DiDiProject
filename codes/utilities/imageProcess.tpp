@@ -30,7 +30,7 @@ Matrix<int>& knn_removal(Matrix<int> &mat_in, Matrix<int> &mat_out) {
 }
 
 Matrix<int>& two_level(Matrix<int> &mat_in, Matrix<int> &mat_out) {
-    unsigned int threshold = 3; // The threshold that seperate the pixel to 0 or 1.
+    unsigned int threshold = 0; // The threshold that seperate the pixel to 0 or 1.
 	int* data_out = new int [mat_in.getRowNum() * mat_in.getColNum()];
 	mat_out.setRowNum(mat_in.getRowNum()); mat_out.setColNum(mat_in.getColNum());
 	mat_out.set_data(data_out);

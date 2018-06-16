@@ -1,4 +1,5 @@
 #include "imageProcess.h"
+#include "KNNFloatImg.h"
 
 Matrix<int>& sharpen_matrix(Matrix<int> &mat_in, Matrix<int> &mat_out) {
     int kernel_size_x = 3;
@@ -24,6 +25,7 @@ Matrix<int>& sharpen_matrix(Matrix<int> &mat_in, Matrix<int> &mat_out) {
 }
 
 Matrix<int>& knn_removal(Matrix<int> &mat_in, Matrix<int> &mat_out) {
+    KNN_removal((float*)mat_in[0],(int*)mat_out[0],mat_in.getRowNum(),mat_in.getColNum(),15,30,1.5);//kernelsize,k,dis_th
     return mat_out;
 }
 

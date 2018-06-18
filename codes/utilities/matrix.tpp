@@ -25,7 +25,7 @@ template <class T> bool Matrix<T>::initialized() {
 // setting data
 template <class T> void Matrix<T>::set_data(T* data) {
     if (this->data != nullptr) {
-        cout << "Warning: when setting data to matrix, you are about to cover the old data.\n";
+        // cout << "Warning: when setting data to matrix, you are about to cover the old data.\n";
         delete[] this->data;
     }
     this->data = data;

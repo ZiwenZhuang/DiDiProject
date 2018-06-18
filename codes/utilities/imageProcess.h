@@ -26,7 +26,7 @@ Matrix<int>& knn_removal(Matrix<int> &mat_in, Matrix<int> &mat_out);
 */
 Matrix<int>& two_level(Matrix<int> &mat_in, Matrix<int> &mat_out);
 
-/* Applying anisotropic diffusion methods and try to eliminate the noise
+/* Applying aniostropic diffusion methods and try to eliminate the noise
 */
 Matrix<int>& anios_diff(Matrix<int> &mat_in, Matrix<int> &mat_out);
 

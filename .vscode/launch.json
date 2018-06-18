@@ -9,7 +9,9 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/codes/main.exe",
-            "args": [],
+            "args": [
+                "anios"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/codes",
             "environment": [],

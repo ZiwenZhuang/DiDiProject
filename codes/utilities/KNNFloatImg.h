@@ -1,6 +1,7 @@
 #ifndef KNNFLOAT_H
 #define KNNFLOAT_H
 
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include <cstdlib>
 #include <cstdint>

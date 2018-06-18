@@ -8,7 +8,7 @@ template <class T> Matrix<T>::Matrix() {
 template <class T> Matrix<T>::Matrix(unsigned int num_rows, unsigned int num_cols) {
     this->num_rows = num_rows;
     this->num_cols = num_cols;
-    this->data = nullptr;
+    this->data = new T [num_rows * num_cols];
 }
 template <class T> Matrix<T>::Matrix(unsigned int num_rows, unsigned int num_cols, T* data) {
     this->num_rows = num_rows;

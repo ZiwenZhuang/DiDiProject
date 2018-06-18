@@ -44,33 +44,51 @@ int main(int argc, char *argv[]) {
 
     
     Matrix<int> paths_img = Matrix<int>(720, 480);
+<<<<<<< HEAD
     if (string(argv[1]) == string("raw")) {
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
+=======
+    paths_img.set_data(pixel(gps_file, \
+        paths_img.getRowNum(), paths_img.getColNum()));
+    if (strcmp(argv[1], "raw") == 0) {
+>>>>>>> cb3b7a4cd42d835ddc3e3e34b26b24afeb317155
         // write directly the readin image from Lottie
         pgm_ASCII::write_image<int>(paths_img, "../data/paths_img.pgm");
         return 0;
     }
 
+<<<<<<< HEAD
     if (string(argv[1]) == string("enhance")) {
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
+=======
+    if (strcmp(argv[1], "enhance") == 0) {
+>>>>>>> cb3b7a4cd42d835ddc3e3e34b26b24afeb317155
         // Using edge detection kernel to enhance the image. The kernel is in the cooresponding function.
         Matrix<int> temp_img (paths_img.getRowNum(), paths_img.getColNum());
         sharpen_matrix(paths_img, temp_img);
         pgm_ASCII::write_image<int>(temp_img, "../data/paths_enhanced.pgm");
 
+<<<<<<< HEAD
     } else if (string(argv[1]) == string("two_level")) {
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
+=======
+    } else if (strcmp(argv[1], "two_level") == 0) {
+>>>>>>> cb3b7a4cd42d835ddc3e3e34b26b24afeb317155
         // Set the image with only two value either 0 or 1, the threshold is in the function.
         Matrix<int> temp_img (paths_img.getRowNum(), paths_img.getColNum());
         two_level(paths_img, temp_img);
         pgm_ASCII::write_image<int>(temp_img, "../data/two_level.pgm");
 
+<<<<<<< HEAD
     } else if (string(argv[1]) == string("knn")) {
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
+=======
+    } else if (strcmp(argv[1], "knn") == 0) {
+>>>>>>> cb3b7a4cd42d835ddc3e3e34b26b24afeb317155
         // Using KNN removal method try to make the process clear.
         Matrix<int> temp_img (paths_img.getRowNum(), paths_img.getColNum());
         Matrix<int> tempp_img (paths_img.getRowNum(), paths_img.getColNum());
@@ -78,9 +96,13 @@ int main(int argc, char *argv[]) {
         knn_removal(temp_img, tempp_img);
         pgm_ASCII::write_image<int>(tempp_img, "../data/knn_removal_result.pgm");
 
+<<<<<<< HEAD
     } else if (string(argv[1]) == string("anios")) {
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
+=======
+    } else if (strcmp(argv[1], "anios") == 0) {
+>>>>>>> cb3b7a4cd42d835ddc3e3e34b26b24afeb317155
         // Apply Aniostropic diffusion method to try to eliminate the noise
         Matrix<int> temp_img (paths_img.getRowNum(), paths_img.getColNum());
         anios_diff(paths_img, temp_img);

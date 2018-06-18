@@ -38,7 +38,7 @@ Matrix<int>& two_level(Matrix<int> &mat_in, Matrix<int> &mat_out) {
 }
 
 float gradient(Matrix<int> &mat, int centerX, int centerY) {
-    float k = 4.f; // Define the threshold to calcualte the diffustion
+    float k = 1.f; // Define the threshold to calcualte the diffustion
     float learning_rate = 1; // The lambda parameter in the iterating equation
     float gradient_sum = 0;
     gradient_sum += (mat[centerX][centerY - 1] - mat[centerX][centerY]) \
@@ -57,7 +57,7 @@ Matrix<int>& anios_diff(Matrix<int> &mat_in, Matrix<int> &mat_out) {
     memcpy(mat_tmp[0], mat_in[0], (mat_in.getColNum() * mat_in.getRowNum() * sizeof(int)));
     memcpy(mat_out[0], mat_in[0], (mat_in.getColNum() * mat_in.getRowNum() * sizeof(int)));
 
-    for (int iter = 0; iter < 1000; iter++) {
+    for (int iter = 0; iter < 100; iter++) {
         for (int x = 1; x < mat_out.getRowNum()-1; x++) {
             for (int y = 1; y < mat_out.getColNum()-1; y++) {
                 mat_tmp[x][y] = mat_out[x][y] + gradient(mat_out, x, y);

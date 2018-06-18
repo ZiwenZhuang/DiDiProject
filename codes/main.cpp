@@ -83,7 +83,8 @@ int main(int argc, char *argv[]) {
             paths_img.getRowNum(), paths_img.getColNum()));
         // Apply Aniostropic diffusion method to try to eliminate the noise
         Matrix<int> temp_img (paths_img.getRowNum(), paths_img.getColNum());
-        anios_diff(paths_img, temp_img);
+        anios_diff(paths_img, paths_img);
+        two_level(paths_img, temp_img);
         pgm_ASCII::write_image<int>(temp_img, "../data/anios_diff.pgm");
 
     } else {

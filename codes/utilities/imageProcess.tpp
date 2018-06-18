@@ -1,5 +1,4 @@
 #include "imageProcess.h"
-#include "KNNFloatImg.h"
 
 Matrix<int>& sharpen_matrix(Matrix<int> &mat_in, Matrix<int> &mat_out) {
     int kernel_size_x = 3;
@@ -39,4 +38,36 @@ Matrix<int>& two_level(Matrix<int> &mat_in, Matrix<int> &mat_out) {
 			mat_out[i][j] = (mat_in[i][j] > threshold) ? 1 : 0;
 		}
 	}
+}
+
+float gradient(Matrix<int> &mat, int centerX, int centerY) {
+    float k = 4.f; // Define the threshold to calcualte the diffustion
+    float learning_rate = 1; // The lambda parameter in the iterating equation
+    float gradient_sum = 0;
+    gradient_sum += (mat[centerX][centerY - 1] - mat[centerX][centerY]) \
+        / (1 + pow(((mat[centerX][centerY - 1] - mat[centerX][centerY])/k), 2));
+    gradient_sum += (mat[centerX][centerY + 1] - mat[centerX][centerY]) \
+        / (1 + pow(((mat[centerX][centerY + 1] - mat[centerX][centerY])/k), 2));
+    gradient_sum += (mat[centerX - 1][centerY] - mat[centerX][centerY]) \
+        / (1 + pow(((mat[centerX - 1][centerY] - mat[centerX][centerY])/k), 2));
+    gradient_sum += (mat[centerX + 1][centerY] - mat[centerX][centerY]) \
+        / (1 + pow(((mat[centerX + 1][centerY] - mat[centerX][centerY])/k), 2));
+    return (learning_rate * gradient_sum / 4);
+}
+
+Matrix<int>& anios_diff(Matrix<int> &mat_in, Matrix<int> &mat_out) {
+    Matrix<int> mat_tmp (mat_in.getRowNum(), mat_in.getColNum());
+    memcpy(mat_tmp[0], mat_in[0], (mat_in.getColNum() * mat_in.getRowNum() * sizeof(int)));
+    memcpy(mat_out[0], mat_in[0], (mat_in.getColNum() * mat_in.getRowNum() * sizeof(int)));
+
+    for (int iter = 0; iter < 1000; iter++) {
+        for (int x = 1; x < mat_out.getRowNum()-1; x++) {
+            for (int y = 1; y < mat_out.getColNum()-1; y++) {
+                mat_tmp[x][y] = mat_out[x][y] + gradient(mat_out, x, y);
+            }
+        }
+        memcpy(mat_out[0], mat_tmp[0], (mat_in.getColNum() * mat_in.getRowNum() * sizeof(int)));
+    }
+
+    return mat_out;
 }

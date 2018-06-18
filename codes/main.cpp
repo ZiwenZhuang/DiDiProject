@@ -44,8 +44,8 @@ int main() {
     // // Using KNN removal method try to make the process clear.
     Matrix<int> tempp_img;
     sharpen_matrix(paths_img, tempp_img);
-     knn_removal(temp_img, tempp_img);
-     pgm_ASCII::write_image<int>(tempp_img, "../data/knn_removal_result.pgm");
+    knn_removal(temp_img, tempp_img);
+    pgm_ASCII::write_image<int>(tempp_img, "../data/knn_removal_result.pgm");
     //pgm_ASCII::write_image<int>(temp_img, "../data/two_level.pgm");
 
     printf("The program ends\n\tpress any key and Enter to quit\n");

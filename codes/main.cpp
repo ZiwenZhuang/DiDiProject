@@ -49,10 +49,8 @@ int main(int argc, char *argv[]) {
             paths_img.getRowNum(), paths_img.getColNum()));
         // write directly the readin image from Lottie
         pgm_ASCII::write_image<int>(paths_img, "../data/paths_img.pgm");
-        
-    }
 
-    if (string(argv[1]) == string("enhance")) {
+    } else if (string(argv[1]) == string("enhance")) {
         cout << "start the program with argv[1]: " << argv[1] << endl;
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));

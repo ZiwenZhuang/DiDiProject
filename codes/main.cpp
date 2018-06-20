@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
         Matrix<float> temp_img (paths_img.getRowNum(), paths_img.getColNum());
         anios_diff(paths_img, temp_img);
         Matrix<int> output (paths_img.getRowNum(), paths_img.getColNum());
-        two_level(temp_img, output, 5);
+        two_level(temp_img, output, 40);
         pgm_ASCII::write_image<int>(output, "../data/anios_diff.pgm");
 
     } else {

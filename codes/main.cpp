@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
             paths_img.getRowNum(), paths_img.getColNum()));
         // write directly the readin image from Lottie
         pgm_ASCII::write_image<int>(paths_img, "../data/paths_img.pgm");
-        return 0;
+        
     }
 
     if (string(argv[1]) == string("enhance")) {

@@ -27,8 +27,8 @@ Matrix<int>& knn_removal(Matrix<int> &mat_in, Matrix<int> &mat_out) {
 }
 
 template<class T>
-Matrix<int>& two_level(Matrix<T> &mat_in, Matrix<int> &mat_out) {
-    unsigned int threshold = 1; // The threshold that seperate the pixel to 0 or 1.
+Matrix<int>& two_level(Matrix<T> &mat_in, Matrix<int> &mat_out, unsigned int threshold) {
+   // The threshold that seperate the pixel to 0 or 1.
 	int* data_out = new int [mat_in.getRowNum() * mat_in.getColNum()];
 	mat_out.set_data(data_out);
 	for (int i = 0; i < mat_in.getRowNum(); i++) {
@@ -39,7 +39,7 @@ Matrix<int>& two_level(Matrix<T> &mat_in, Matrix<int> &mat_out) {
 }
 
 float gradient(Matrix<float> &mat, int centerX, int centerY) {
-    float k = 5; // Define the threshold to calcualte the diffustion
+    float k = 2; // Define the threshold to calcualte the diffustion
     float learning_rate = 1; // The lambda parameter in the iterating equation
     float gradient_sum = 0;
     gradient_sum += (mat[centerX][centerY - 1] - mat[centerX][centerY]) \
@@ -60,7 +60,7 @@ Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out) {
         mat_tmp[0][i] = (float)mat_in[0][i];
     }
 
-    for (int iter = 0; iter < 25; iter++) {
+    for (int iter = 0; iter < 50; iter++) {
         for (int x = 1; x < mat_out.getRowNum()-1; x++) {
             for (int y = 1; y < mat_out.getColNum()-1; y++) {
                 mat_tmp[x][y] = mat_out[x][y] + gradient(mat_out, x, y);

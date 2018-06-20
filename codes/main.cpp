@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
 
     
-    Matrix<int> paths_img = Matrix<int>(720, 480);
+    Matrix<int> paths_img = Matrix<int>(480, 480);
     if (string(argv[1]) == string("raw")) {
         cout << "start the program with argv[1]: " << argv[1] << endl;
         paths_img.set_data(pixel(gps_file, \

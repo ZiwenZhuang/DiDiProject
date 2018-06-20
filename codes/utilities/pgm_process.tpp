@@ -102,7 +102,7 @@ namespace pgm_ASCII {
                     file << "\t" << ((target[j][i] > 0) ? (target[j][i]) : 0);
                 }
             }
-            return 0;  
+            return 0;
         } else {
             file << endl << set_great;
             for (int i = target.getColNum()-1; i >= 0; i--) {

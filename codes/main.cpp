@@ -37,7 +37,6 @@ int main(int argc, char *argv[]) {
         char q; cin >> q;
         return 0;
     }
-    cout << "start the program with argv[1]: " << argv[1] << endl;
 
     fstream order_file; order_file.open("../data/order_20161101", ios_base::in);
     fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
@@ -45,6 +44,7 @@ int main(int argc, char *argv[]) {
     
     Matrix<int> paths_img = Matrix<int>(720, 480);
     if (string(argv[1]) == string("raw")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
         // write directly the readin image from Lottie
@@ -53,6 +53,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (string(argv[1]) == string("enhance")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
         // Using edge detection kernel to enhance the image. The kernel is in the cooresponding function.
@@ -61,6 +62,7 @@ int main(int argc, char *argv[]) {
         pgm_ASCII::write_image<int>(temp_img, "../data/paths_enhanced.pgm");
 
     } else if (string(argv[1]) == string("two_level")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
         // Set the image with only two value either 0 or 1, the threshold is in the function.
@@ -69,6 +71,7 @@ int main(int argc, char *argv[]) {
         pgm_ASCII::write_image<int>(temp_img, "../data/two_level.pgm");
 
     } else if (string(argv[1]) == string("knn")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
         // Using KNN removal method try to make the process clear.
@@ -79,13 +82,15 @@ int main(int argc, char *argv[]) {
         pgm_ASCII::write_image<int>(tempp_img, "../data/knn_removal_result.pgm");
 
     } else if (string(argv[1]) == string("anios")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
         // Apply Aniostropic diffusion method to try to eliminate the noise
-        Matrix<int> temp_img (paths_img.getRowNum(), paths_img.getColNum());
-        anios_diff(paths_img, paths_img);
-        two_level(paths_img, temp_img);
-        pgm_ASCII::write_image<int>(temp_img, "../data/anios_diff.pgm");
+        Matrix<float> temp_img (paths_img.getRowNum(), paths_img.getColNum());
+        anios_diff(paths_img, temp_img);
+        Matrix<int> output (paths_img.getRowNum(), paths_img.getColNum());
+        two_level(temp_img, output);
+        pgm_ASCII::write_image<int>(output, "../data/anios_diff.pgm");
 
     } else {
         usage();

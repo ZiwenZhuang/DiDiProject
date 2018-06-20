@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/codes/main.exe",
             "args": [
-                "anios"
+                "raw"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/codes",

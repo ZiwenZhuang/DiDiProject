@@ -87,21 +87,32 @@ namespace pgm_ASCII {
         ofstream file; file.open(filename.c_str(), ios_base::out);
         file << "P2\n" << target.getRowNum() << " " << target.getColNum();
         // detect the greatest value
-        int greatest; T* pVal = target.get_data();
+        T greatest; T* pVal = target.get_data();
         greatest = *pVal;
         for (unsigned int i = 1; i < target.getRowNum() * target.getColNum(); i++) {
             greatest = (greatest < pVal[i])? pVal[i]: greatest;
         }
         // set the greatest value manually, in case the greatest value is too large to diaplay.
         unsigned int set_great = 1024;
-        file << endl << set_great;
-        for (unsigned int i = 1; i < target.getColNum(); i++) {
-            file << endl << ((target[0][i] > 0) ? (target[0][i] * set_great / greatest) : 0);
-            for (unsigned int j = 1; j < target.getRowNum(); j++) {
-                file << "\t" << ((target[j][i] > 0) ? (target[j][i] * set_great / greatest) : 0);
+        if (greatest <= set_great) {
+            file << endl << greatest;
+            for (unsigned int i = 1; i < target.getColNum(); i++) {
+                file << endl << ((target[0][i] > 0) ? (target[0][i]) : 0);
+                for (unsigned int j = 1; j < target.getRowNum(); j++) {
+                    file << "\t" << ((target[j][i] > 0) ? (target[j][i]) : 0);
+                }
             }
+            return 0;  
+        } else {
+            file << endl << set_great;
+            for (unsigned int i = 1; i < target.getColNum(); i++) {
+                file << endl << ((target[0][i] > 0) ? (target[0][i] * set_great / greatest) : 0);
+                for (unsigned int j = 1; j < target.getRowNum(); j++) {
+                    file << "\t" << ((target[j][i] > 0) ? (target[j][i] * set_great / greatest) : 0);
+                }
+            }
+            return 0;
         }
-        return 0;
     }
 
 }

@@ -24,11 +24,12 @@ Matrix<int>& knn_removal(Matrix<int> &mat_in, Matrix<int> &mat_out);
 
 /* This operation split entries into only 1 and 0
 */
-Matrix<int>& two_level(Matrix<int> &mat_in, Matrix<int> &mat_out);
+template<class T>
+Matrix<int>& two_level(Matrix<T> &mat_in, Matrix<int> &mat_out);
 
 /* Applying aniostropic diffusion methods and try to eliminate the noise
 */
-Matrix<int>& anios_diff(Matrix<int> &mat_in, Matrix<int> &mat_out);
+Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out);
 
 #include "imageProcess.tpp"
 

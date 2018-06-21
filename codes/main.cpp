@@ -6,6 +6,7 @@
 #include "utilities/pgm_process.h"
 #include "utilities/matrix.h"
 #include "utilities/pixel.h"
+#include "utilities/graph.h"
 
 using namespace std;
 
@@ -104,6 +105,15 @@ int main(int argc, char *argv[]) {
         two_level(temp_img, output, 5);
         pgm_ASCII::write_image<int>(output, "../data/anios_diff.pgm");
 
+    } else if (string(argv[1]) == string("graph")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
+        graph<int> new_g(10);
+        std::pair<node<int>**,int> nei;
+        new_g.create_node(1,22);
+
+        new_g.create_node(2,33);
+        new_g.create_road(1,22,2,33);
+        nei=new_g.find_neighbor(1,22);
     } else {
         usage();
     }

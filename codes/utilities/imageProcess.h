@@ -25,7 +25,7 @@ Matrix<int>& knn_removal(Matrix<int> &mat_in, Matrix<int> &mat_out);
 /* This operation split entries into only 1 and 0
 */
 template<class T>
-Matrix<int>& two_level(Matrix<T> &mat_in, Matrix<int> &mat_out);
+Matrix<int>& two_level(Matrix<T> &mat_in, Matrix<int> &mat_out, unsigned int threshold = 1);
 
 /* Applying aniostropic diffusion methods and try to eliminate the noise
 */

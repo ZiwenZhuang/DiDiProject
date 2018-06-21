@@ -96,16 +96,16 @@ namespace pgm_ASCII {
         unsigned int set_great = 1024;
         if (greatest <= set_great) {
             file << endl << greatest;
-            for (unsigned int i = 1; i < target.getColNum(); i++) {
+            for (int i = target.getColNum()-1; i >= 0; i--) {
                 file << endl << ((target[0][i] > 0) ? (target[0][i]) : 0);
                 for (unsigned int j = 1; j < target.getRowNum(); j++) {
                     file << "\t" << ((target[j][i] > 0) ? (target[j][i]) : 0);
                 }
             }
-            return 0;  
+            return 0;
         } else {
             file << endl << set_great;
-            for (unsigned int i = 1; i < target.getColNum(); i++) {
+            for (int i = target.getColNum()-1; i >= 0; i--) {
                 file << endl << ((target[0][i] > 0) ? (target[0][i] * set_great / greatest) : 0);
                 for (unsigned int j = 1; j < target.getRowNum(); j++) {
                     file << "\t" << ((target[j][i] > 0) ? (target[j][i] * set_great / greatest) : 0);

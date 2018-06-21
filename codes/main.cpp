@@ -28,6 +28,7 @@ void usage() {
     cout << "\t'two_level': split pixels in only 0 or 1, write result into 'two_level.pgm'\n";
     cout << "\t'knn': applying knn_removal method, write result into 'knn_removal_result.pgm'\n";
     cout << "\t'anios': applying Aniostropic diffusion method, write result into 'anios_diff.pgm'\n";
+    cout << "\t'anios_two_level': apply Anios... method and write result in onlye 2 level\n";
 }
 
 int main(int argc, char *argv[]) {
@@ -42,17 +43,15 @@ int main(int argc, char *argv[]) {
     fstream gps_file; gps_file.open("../data/gps_20161101", ios_base::in);
 
     
-    Matrix<int> paths_img = Matrix<int>(720, 480);
+    Matrix<int> paths_img = Matrix<int>(480, 480);
     if (string(argv[1]) == string("raw")) {
         cout << "start the program with argv[1]: " << argv[1] << endl;
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
         // write directly the readin image from Lottie
         pgm_ASCII::write_image<int>(paths_img, "../data/paths_img.pgm");
-        return 0;
-    }
 
-    if (string(argv[1]) == string("enhance")) {
+    } else if (string(argv[1]) == string("enhance")) {
         cout << "start the program with argv[1]: " << argv[1] << endl;
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
@@ -89,7 +88,20 @@ int main(int argc, char *argv[]) {
         Matrix<float> temp_img (paths_img.getRowNum(), paths_img.getColNum());
         anios_diff(paths_img, temp_img);
         Matrix<int> output (paths_img.getRowNum(), paths_img.getColNum());
-        two_level(temp_img, output);
+        for (int i = 0; i < (paths_img.getRowNum() * paths_img.getColNum()); i++) {
+            output[0][i] = (int)temp_img[0][i];
+        }
+        pgm_ASCII::write_image<int>(output, "../data/anios_diff.pgm");
+
+    } else if (string(argv[1]) == string("anios_two_level")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
+        paths_img.set_data(pixel(gps_file, \
+            paths_img.getRowNum(), paths_img.getColNum()));
+        // Apply Aniostropic diffusion method to try to eliminate the noise
+        Matrix<float> temp_img (paths_img.getRowNum(), paths_img.getColNum());
+        anios_diff(paths_img, temp_img);
+        Matrix<int> output (paths_img.getRowNum(), paths_img.getColNum());
+        two_level(temp_img, output, 40);
         pgm_ASCII::write_image<int>(output, "../data/anios_diff.pgm");
 
     } else {

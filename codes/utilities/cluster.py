@@ -60,8 +60,8 @@ for i in range(set_num[0]):
     for j in a_set[i]:
         x+=node_l[j][0]
         y+=node_l[j][1]
-    x=x/len(a_set[i])
-    y=y/len(a_set[i])
+    x=x//len(a_set[i])
+    y=y//len(a_set[i])
     final_node.append([x,y])
 
 for i in range(len(final_node)):

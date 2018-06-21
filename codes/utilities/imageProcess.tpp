@@ -39,7 +39,7 @@ Matrix<int>& two_level(Matrix<T> &mat_in, Matrix<int> &mat_out, unsigned int thr
 }
 
 float gradient(Matrix<float> &mat, int centerX, int centerY) {
-    float k = 3; // Define the threshold to calcualte the diffustion
+    float k = 15; // Define the threshold to calcualte the diffustion
     float learning_rate = 1; // The lambda parameter in the iterating equation
     float gradient_sum = 0;
     gradient_sum += (mat[centerX][centerY - 1] - mat[centerX][centerY]) \
@@ -60,7 +60,7 @@ Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out) {
         mat_tmp[0][i] = (float)mat_in[0][i];
     }
 
-    for (int iter = 0; iter < 25; iter++) {
+    for (int iter = 0; iter < 60; iter++) {
         for (int x = 1; x < mat_out.getRowNum()-1; x++) {
             for (int y = 1; y < mat_out.getColNum()-1; y++) {
                 mat_tmp[x][y] = mat_out[x][y] + gradient(mat_out, x, y);
@@ -69,5 +69,21 @@ Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out) {
         memcpy(mat_out[0], mat_tmp[0], (mat_in.getColNum() * mat_in.getRowNum() * sizeof(int)));
     }
 
+    return mat_out;
+}
+
+template<class T>
+Matrix<T>& lighter(Matrix<T> &mat_in, Matrix<T> &mat_out, float max) {
+    unsigned int length = mat_in.getRowNum() * mat_in.getColNum();
+    T actual_max;
+    if (length != (mat_in.getRowNum() * mat_in.getColNum())) {
+        cerr << "wrong input matrix dimension!\n";
+        exit(0);
+    }
+    for (int i = 0; i < length; i++) {
+        mat_out[0][i] = (mat_in[0][i] > max) ? max : mat_in[0][i];
+        actual_max = (mat_in[0][i] > actual_max) ? mat_in[0][i] : actual_max;
+    }
+    cout << "The set max value is: " << max << "| and the actual max value is: " << actual_max << endl;
     return mat_out;
 }

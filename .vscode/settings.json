@@ -12,6 +12,7 @@
         "iostream": "cpp",
         "string": "cpp",
         "iosfwd": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "limits": "cpp"
     }
 }

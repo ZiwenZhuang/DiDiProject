@@ -20,6 +20,7 @@ public:
 	bool equal(T a, T b);
 	void create_road(T lo1,T la1, T lo2, T la2);
 	//bool is_connected(T la1, T lo1, T la2, Tlo2);
+	std::pair<std::pair<T>*,int> search(std::pair<int,int>,std::pair<int,int>);
 	std::pair<node<T>**,int> find_neighbor(T lo, T la);
 };
 

@@ -133,3 +133,166 @@ std::pair<int, int>* acquire_node_list(string filename, int &node_number) {
 
 	return to_return;
 }
+
+template<class Type>
+class Heap{
+	
+  public:
+  	int Heap_Size;
+	int Heap_Capacity;
+	Type * array;
+	int mode;				/* mode is 0 for MinHeap, 1 for MaxHeap */
+
+  	Heap(int n, int mode);
+  	~Heap();
+  	Type top() const;
+  	Type pop();
+  	void push(Type const a);
+  	bool IsFull() const;
+  	void PrintHeap() const;
+};
+template <class Type>
+Heap<Type>::Heap( int n ,int b){
+	Heap_Size = 0;
+	Heap_Capacity=n;
+	array=new (nothrow) Type [n+1];
+	array[0]=Node(0,0);
+	mode = b;
+}
+template <class Type>
+Heap<Type>::~Heap(){
+	delete[] array;
+}
+
+template <class Type>
+Type Heap<Type>::top() const{
+	return array[1];
+}
+template<class Type>
+bool Heap<Type>::IsFull() const{
+	return(Heap_Size == Heap_Capacity);
+}
+template<class Type>
+Type Heap<Type>::pop(){
+	Type pop;
+	int i=1;						/*index*/
+	Type temp;
+	pop=array[1];
+	array[1]=array[Heap_Size];
+	Heap_Size--;
+	while (2*i <= Heap_Size){		/* left child is in the heap */
+		if (2*i + 1 <= Heap_Size){	/* right child is in the heap */
+			if (mode == 0){			/* MinHeap */
+				if(array[2*i + 1].GetKey()>array[2*i].GetKey()){	/*Left child is smaller */
+					if (array[i].GetKey()> array[2*i].GetKey()){	/* array[i] is not the smallest, change*/
+						temp= array[i];
+						array[i]=array[2*i];
+						array[2*i]=temp;
+						i = 2*i;
+					}else{						
+						break;					/* array[i] is already the smallest. break*/
+					}
+				}else{							/* Right child is smaller */
+					if(array[i].GetKey()> array[2*i+1].GetKey()){	/* array[i] is not the smallest, change*/
+						temp= array[i];
+						array[i]=array[2*i+1];
+						array[2*i+1]=temp;
+						i = 2*i+1;
+					}else{
+						break;
+					}
+				}
+			}else{								/* MaxHeap*/
+				if(array[2*i + 1].GetKey()>array[2*i].GetKey()){	/*Right child is larger */
+					if (array[i].GetKey() < array[2*i +1].GetKey()){	/* array[i] is not the largest, change*/
+						temp= array[i];
+						array[i]=array[2*i+1];
+						array[2*i+1]=temp;
+						i = 2*i + 1;
+					}else{						
+						break;					/* array[i] is already the largest. break*/
+					}
+				}else{							/* Left child is larger */
+					if(array[i].GetKey()<= array[2*i].GetKey()){	/* array[i] is not the largest, change*/
+						temp= array[i];
+						array[i]=array[2*i];
+						array[2*i]=temp;
+						i = 2*i;
+					}else{
+						break;
+					}
+				}
+			}
+		}else{									/* Left child is in the array, right child is missing*/
+			if (mode == 0){
+				if (array[i].GetKey()< array[2*i].GetKey()){
+					break;
+				}else{
+					temp=array[i];
+					array[i]=array[2*i];
+					array[2*i]=temp;
+					break;
+				}
+			}else{
+				if(array[i].GetKey()>array[2*i].GetKey()){
+					break;
+				}else{
+					temp=array[i];
+					array[i]=array[2*i];
+					array[2*i]=temp;
+					break;
+				}
+			}
+		}	
+	}
+	return pop;
+}
+template <class Type>
+void Heap<Type>::push(Type const a){
+	int i;
+	Type temp;
+	Heap_Size++;
+	array[Heap_Size]=a;
+	i = Heap_Size;
+	while (i>1){
+		if(mode == 0){
+			if (array[i].GetKey() < array[i/2].GetKey()){
+				temp=array[i];
+				array[i]=array[i/2];
+				array[i/2]=temp;
+				i=i/2;
+			}else{
+				break;
+			}
+		}else{
+			if(array[i].GetKey() > array[i/2].GetKey()){
+				temp = array[i];
+				array[i]=array[i/2];
+				array[i/2]=temp;
+				i=i/2;
+			}else{
+				break;
+			}
+		}
+	}
+}
+
+template <class Type>
+void Heap<Type>::PrintHeap() const{
+	int i=1;
+	int j=0;
+	while ((1<< j) < Heap_Size +1){
+		printf("(%d, %d)",array[i].priority, array[i].least_char);
+		i++;
+		while (i >= (1<< j) && i <(1<< (j+1))){
+			if(i <= Heap_Size){
+				printf(" (%d, %d)", array[i].priority, array[i].least_char);
+			}else{
+				printf(" S");
+			}
+			i ++;
+		}
+		printf("\n");
+		j++;
+	}
+}

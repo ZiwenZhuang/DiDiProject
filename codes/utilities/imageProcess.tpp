@@ -87,3 +87,38 @@ Matrix<T>& lighter(Matrix<T> &mat_in, Matrix<T> &mat_out, float max) {
     cout << "The set max value is: " << max << "| and the actual max value is: " << actual_max << endl;
     return mat_out;
 }
+
+bool check_connected(Matrix<int> &image, const std::pair<int, int> &nodeA, const std::pair<int, int> &nodeB\
+    , int threshold, int line_width, int maxSegments) {
+    double k, b; // the two parameters that represents a line
+    k = (double)(nodeA.second - nodeB.second) / (nodeA.first - nodeB.first);
+    b = (double)nodeA.second - (k * nodeA.first);
+
+    int startX, endX; // set the start and end point of the line detection process
+    if (nodeA.first < nodeB.first) {
+        startX = nodeA.first;
+        endX = nodeB.first;
+    } else {
+        startX = nodeB.first;
+        endX = nodeA.first;
+    }
+
+    int countSegments = 0; // count how many segments are generateds
+    // move along the image and theck if the road connects
+    for (int X = startX; X <= endX; X++) {
+        int Y = (int)(k * X + b);
+        if (Y < line_width || Y >= (image.getColNum()-line_width)) continue;
+        int count = (image[X][Y] >= threshold) ? 1 : 0;
+        for (int i = 1; i <= line_width; i++) {
+            if (image[X][Y+1] >= threshold) count++;
+            if (image[X][Y-1] >= threshold) count++;
+        }
+        if (count < 3) {
+            countSegments++;
+        }
+    }
+
+    // check if there are too many segments in this line and then return false
+    if (countSegments > maxSegments || countSegments > ((endX - startX)/2)) return false;
+    return true;
+}

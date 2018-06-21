@@ -35,7 +35,13 @@ Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out);
 greater than the set value are changed to that 'set value'.
 */
 template<class T>
-Matrix<T>& lighter(Matrix<T> &mat_in, Matrix<T> &mat_out, float max = 200);
+Matrix<T>& lighter(Matrix<T> &mat_in, Matrix<T> &mat_out, float max = 5000);
+
+/* This function view through the image and check if there are really
+a stright line connecting them.
+*/
+bool check_connected(Matrix<int> &image, const std::pair<int, int> &nodeA, const std::pair<int, int> &nodeB\
+    , int threshold = 2000, int line_width = 1, int maxSegments = 0);
 
 #include "imageProcess.tpp"
 

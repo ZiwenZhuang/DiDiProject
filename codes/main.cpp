@@ -32,6 +32,7 @@ void usage() {
     cout << "\t'anios_lighter': applying Aniostropic diffusion method, and make the picture lighter, write result into 'anios_lighter'\n";
     cout << "\t'anios_two_level': apply Anios... method and write result in onlye 2 level\n";
     cout << "\t'graph': Used for storing the vertices and detecting neighbors\n";
+    cout << "\t'get_graph': add the node list to the Graph object and forms the digitalized object\n";
 }
 
 int main(int argc, char *argv[]) {
@@ -131,7 +132,47 @@ int main(int argc, char *argv[]) {
             output[0][i] = (int)temp_img[0][i];
         }
         pgm_ASCII::write_image<int>(output, "../data/anios_lighter.pgm");
-    
+
+    } else if (string(argv[1]) == string("get_graph")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
+        paths_img.set_data(pixel(gps_file, \
+            paths_img.getRowNum(), paths_img.getColNum()));
+
+        // Apply Aniostropic diffusion method to try to eliminate the noise
+        Matrix<float> temp_img (paths_img.getRowNum(), paths_img.getColNum());
+        anios_diff(paths_img, temp_img);
+        lighter(temp_img, temp_img, 3000);
+        Matrix<int> to_display (paths_img.getRowNum(), paths_img.getColNum());
+        two_level(temp_img, to_display, 2000);
+
+        string filename = "node_array";
+        // Get the list of nodes recognized by the python program
+        int node_number = 0;
+        std::pair<int, int>* node_list = acquire_node_list(filename, node_number);
+        // The first is the row index
+        // and the second is column index
+        // (which is just x, y coordinates)
+
+        // Constructing the graph
+        graph<int> graph (node_number);
+        for (int i = 0; i < node_number; i++) {
+            graph.create_node(node_list[i].first, node_list[i].second);
+        }
+
+        // Recognizing between each nodes whether there are direct roads
+        for (int i = 0; i < node_number; i++) {
+            // checking the i-th nodes neighbors (index greater than i)
+            for (int j = i; j < node_number; j++) {
+                // if this two node is neighbor, connect them in Graph object
+                // Given the processed matrix.
+                if (check_connected(to_display, node_list[i], node_list[j])) {
+                    graph.create_road(node_list[i].first, node_list[i].second,\
+                        node_list[j].first, node_list[j].second);
+                }
+            }
+        }
+
+
 
     } else {
         usage();

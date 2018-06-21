@@ -102,6 +102,7 @@ namespace pgm_ASCII {
                     file << "\t" << ((target[j][i] > 0) ? (target[j][i]) : 0);
                 }
             }
+            cout << endl;
             return 0;
         } else {
             file << endl << set_great;
@@ -111,6 +112,7 @@ namespace pgm_ASCII {
                     file << "\t" << ((target[j][i] > 0) ? (target[j][i] * set_great / greatest) : 0);
                 }
             }
+            cout << endl;
             return 0;
         }
     }

@@ -31,6 +31,12 @@ Matrix<int>& two_level(Matrix<T> &mat_in, Matrix<int> &mat_out, unsigned int thr
 */
 Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out);
 
+/* By changing the maximum value into a setting value, and all values
+greater than the set value are changed to that 'set value'.
+*/
+template<class T>
+Matrix<T>& lighter(Matrix<T> &mat_in, Matrix<T> &mat_out, float max = 50);
+
 #include "imageProcess.tpp"
 
 #endif

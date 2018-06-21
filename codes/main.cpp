@@ -31,6 +31,7 @@ void usage() {
     cout << "\t'anios': applying Aniostropic diffusion method, write result into 'anios_diff.pgm'\n";
     cout << "\t'anios_lighter': applying Aniostropic diffusion method, and make the picture lighter, write result into 'anios_lighter'\n";
     cout << "\t'anios_two_level': apply Anios... method and write result in onlye 2 level\n";
+    cout << "\t'graph': Used for storing the vertices and detecting neighbors\n";
 }
 
 int main(int argc, char *argv[]) {

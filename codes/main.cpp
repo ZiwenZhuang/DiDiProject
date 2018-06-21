@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
         // Apply Aniostropic diffusion method to try to eliminate the noise
         Matrix<float> temp_img (paths_img.getRowNum(), paths_img.getColNum());
         anios_diff(paths_img, temp_img);
-        lighter(temp_img, temp_img);
+        lighter(temp_img, temp_img, 200);
         Matrix<int> output (paths_img.getRowNum(), paths_img.getColNum());
         for (int i = 0; i < (paths_img.getRowNum() * paths_img.getColNum()); i++) {
             output[0][i] = (int)temp_img[0][i];

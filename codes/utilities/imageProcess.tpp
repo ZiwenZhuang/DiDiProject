@@ -81,8 +81,8 @@ Matrix<T>& lighter(Matrix<T> &mat_in, Matrix<T> &mat_out, float max) {
         exit(0);
     }
     for (int i = 0; i < length; i++) {
-        mat_out[0][i] = (mat_in[0][i] > max) ? max : mat_in[0][i];
         actual_max = (mat_in[0][i] > actual_max) ? mat_in[0][i] : actual_max;
+        mat_out[0][i] = (mat_in[0][i] > max) ? max : mat_in[0][i];
     }
     cout << "The set max value is: " << max << "| and the actual max value is: " << actual_max << endl;
     return mat_out;

@@ -68,6 +68,17 @@ std::pair<node<T>**,int> graph<T>::find_neighbor(T lo, T la){
 	return std::pair<node<T>**,int>(nullptr,0);
 }
 
+template<class T>
+int graph<T>::find_node(T a,T b){
+	int i;
+	for(i=0;i<now_i;i++){
+		if(equal(adj_l[i]->pos.first,a) && equal(adj_l[i]->pos.second,b)){
+			return i;
+		}
+	}
+	return -1;
+}
+
 static std::pair<int, int> extractNumbers(string str) {
 	std::pair<int, int> to_return = std::pair<int, int>(0, 0);
 	int flag = 0; // 0 for the previous char is not a number

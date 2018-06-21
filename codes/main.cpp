@@ -6,6 +6,7 @@
 #include "utilities/pgm_process.h"
 #include "utilities/matrix.h"
 #include "utilities/pixel.h"
+#include "utilities/graph.h"
 
 using namespace std;
 
@@ -30,6 +31,7 @@ void usage() {
     cout << "\t'anios': applying Aniostropic diffusion method, write result into 'anios_diff.pgm'\n";
     cout << "\t'anios_lighter': applying Aniostropic diffusion method, and make the picture lighter, write result into 'anios_lighter'\n";
     cout << "\t'anios_two_level': apply Anios... method and write result in onlye 2 level\n";
+    cout << "\t'graph': Used for storing the vertices and detecting neighbors\n";
 }
 
 int main(int argc, char *argv[]) {
@@ -105,6 +107,17 @@ int main(int argc, char *argv[]) {
         two_level(temp_img, output, 50);
         pgm_ASCII::write_image<int>(output, "../data/anios_diff.pgm");
 
+
+    } else if (string(argv[1]) == string("graph")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
+        graph<int> new_g(10);
+        std::pair<node<int>**,int> nei;
+        new_g.create_node(1,22);
+
+        new_g.create_node(2,33);
+        new_g.create_road(1,22,2,33);
+        nei=new_g.find_neighbor(1,22);
+
     } else if (string(argv[1]) == string("anios_lighter")) {
         cout << "start the program with argv[1]: " << argv[1] << endl;
         paths_img.set_data(pixel(gps_file, \
@@ -119,6 +132,7 @@ int main(int argc, char *argv[]) {
         }
         pgm_ASCII::write_image<int>(output, "../data/anios_lighter.pgm");
     
+
     } else {
         usage();
     }

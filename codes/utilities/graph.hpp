@@ -44,7 +44,7 @@ void graph<T>::create_road(T la1,T lo1, T la2, T lo2){
 
 template<class T>
 bool graph<T>::equal(T a, T b){
-	if(a+diff<=b && b<=a+diff){
+	if(abs(a-b)<= diff){
 		return true;
 	}else{return false;}
 }

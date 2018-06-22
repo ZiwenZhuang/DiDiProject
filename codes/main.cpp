@@ -135,13 +135,13 @@ int main(int argc, char *argv[]) {
 
     } else if (string(argv[1]) == string("get_graph")) {
         cout << "start the program with argv[1]: " << argv[1] << endl;
-        paths_img.set_data(pixel(gps_file, \
-            paths_img.getRowNum(), paths_img.getColNum()));
-        writeMatrix("../data/path_matrix.matrix", paths_img);
-        Matrix<int> &order_img = paths_img;
+        // paths_img.set_data(pixel(gps_file, \
+        //     paths_img.getRowNum(), paths_img.getColNum()));
+        // writeMatrix("../data/path_matrix.matrix", paths_img);
+        // Matrix<int> &order_img = paths_img;
         
-        // Matrix<int> order_img;
-        // readMatrix("../data/path_matrix.matrix", order_img);
+        Matrix<int> order_img;
+        readMatrix("../data/path_matrix.matrix", order_img);
 
         // Apply Aniostropic diffusion method to try to eliminate the noise
         Matrix<float> temp_img (order_img.getRowNum(), order_img.getColNum());

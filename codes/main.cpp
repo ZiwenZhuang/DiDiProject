@@ -172,7 +172,7 @@ int main(int argc, char *argv[]) {
         Matrix<int> to_display (order_img.getRowNum(), order_img.getColNum());
         two_level(temp_img, to_display, 200);
 
-        string filename = "../data/node_array";
+        string filename = "../data/intersection.bin";
         // Get the list of nodes recognized by the python program
         int node_number = 0;
         std::pair<int, int>* node_list = acquire_node_list(filename, node_number);
@@ -239,14 +239,24 @@ int main(int argc, char *argv[]) {
         lighter(temp_img, temp_img, 3000);
         Matrix<int> to_display (order_img.getRowNum(), order_img.getColNum());
         two_level(temp_img, to_display, 2000);
+        
+        // Generate the preprocessed image
+        pgm_ASCII::write_image(to_display, "../demo/prepeocessed.pgm");
 
-        string filename = "../data/corner.bin";
+        string filename = "../data/intersection.bin";
         // Get the list of nodes recognized by the python program
         int node_number = 0;
         std::pair<int, int>* node_list = acquire_node_list(filename, node_number);
+        clockwise90(node_list, node_number, order_img.getRowNum());
         // The first is the row index
         // and the second is column index
         // (which is just x, y coordinates)
+
+        // Generate the nodes patches that are recognized
+        Matrix<int> nodes_marks = to_display;
+        add_patch<int>(nodes_marks, node_list, node_number, 0, 3);
+        add_patch<int>(to_display, node_list, node_number, 1, 3);
+        pgm_ASCII::write_image_3C(to_display, nodes_marks, to_display, "../demo/marked_nodes.ppm");
 
         // Constructing the graph
         graph<int> graph (node_number);
@@ -266,7 +276,24 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
-                
+
+        int a, b; // input node index to search route
+        a = nodes_number + 1;
+        while ((a < 0) || (a > nodes_numbers - 1) || (b < 0) || (b > node_number - 1)) {
+            cout << "There are " << node_number << " nodes in total," << endl;
+            cout << "\tplease choose two nodes (by index) to search the nodes: ";
+            cin >> a; cout << "\tpess next number to choose the next node: " cin >> b;
+        }// get the index
+
+        // Acquire path
+        std::pair<std::pair<int,int>*,int> result = graph.path(node_list[a], node_list[b]);
+
+        Matrix<int> paths = to_display;
+        add_patch<int>(paths, result.first, result.second, 0, 3);
+        add_patch<int>(to_display, result.first, result.second, 1, 3);
+        pgm_ASCII::write_image_3C(to_display, to_display, paths, "../demo/nodes_on_the_pathway.ppm");
+        
+
     } else {
         usage();
     }

@@ -9,7 +9,6 @@
             "command": "g++",
             "args": [
                 "-g",
-                "-O3",
                 "-std=c++11",
                 "-o ./codes/main.exe",
                 "./codes/main.cpp ./codes/utilities/*.cpp ./codes/included/*.cpp",

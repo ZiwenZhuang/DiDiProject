@@ -115,14 +115,15 @@ int main(int argc, char *argv[]) {
 
     } else if (string(argv[1]) == string("anios_two_level")) {
         cout << "start the program with argv[1]: " << argv[1] << endl;
-        paths_img.set_data(pixel(gps_file, \
-            paths_img.getRowNum(), paths_img.getColNum()));
+
+        Matrix<int> order_img;
+        readMatrix("../data/path_matrix.matrix", order_img);
         // Apply Aniostropic diffusion method to try to eliminate the noise
-        Matrix<float> temp_img (paths_img.getRowNum(), paths_img.getColNum());
-        anios_diff(paths_img, temp_img);
-        Matrix<int> output (paths_img.getRowNum(), paths_img.getColNum());
+        Matrix<float> temp_img (order_img.getRowNum(), order_img.getColNum());
+        anios_diff(order_img, temp_img, 20);
+        Matrix<int> output (order_img.getRowNum(), order_img.getColNum());
         two_level(temp_img, output, 50);
-        pgm_ASCII::write_image<int>(output, "../data/anios_diff.pgm");
+        pgm_ASCII::write_image<int>(output, "../data/anios_diff_it20.pgm");
 
 
     } else if (string(argv[1]) == string("graph")) {
@@ -286,12 +287,12 @@ int main(int argc, char *argv[]) {
         }// get the index
 
         // Acquire path
-        // std::pair<std::pair<int,int>*,int> result = graph.path(node_list[a], node_list[b]);
+        std::pair<std::pair<int,int>*,int> result = graph.path(node_list[a], node_list[b]);
 
-        // Matrix<int> paths = to_display;
-        // add_patch<int>(paths, result.first, result.second, 0, 3);
-        // add_patch<int>(to_display, result.first, result.second, 1, 3);
-        // pgm_ASCII::write_image_3C(to_display, to_display, paths, "../demo/nodes_on_the_pathway.ppm");
+        Matrix<int> paths = to_display;
+        add_patch<int>(paths, result.first, result.second, 0, 3);
+        add_patch<int>(to_display, result.first, result.second, 1, 3);
+        pgm_ASCII::write_image_3C(to_display, to_display, paths, "../demo/nodes_on_the_pathway.ppm");
         
 
     } else {

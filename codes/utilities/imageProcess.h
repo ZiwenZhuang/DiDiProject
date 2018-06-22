@@ -29,7 +29,7 @@ Matrix<int>& two_level(Matrix<T> &mat_in, Matrix<int> &mat_out, unsigned int thr
 
 /* Applying aniostropic diffusion methods and try to eliminate the noise
 */
-Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out);
+Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out, int iteration = 60);
 
 /* By changing the maximum value into a setting value, and all values
 greater than the set value are changed to that 'set value'.

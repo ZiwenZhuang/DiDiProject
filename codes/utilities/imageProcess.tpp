@@ -53,7 +53,7 @@ float gradient(Matrix<float> &mat, int centerX, int centerY) {
     return (learning_rate * gradient_sum / 4);
 }
 
-Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out) {
+Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out, int iteration) {
     cout << "Start applying Anisotropic diffusion method";
     Matrix<float> mat_tmp (mat_in.getRowNum(), mat_in.getColNum());
     for (int i = 0; i < (mat_in.getRowNum() * mat_in.getColNum()); i++) {
@@ -61,7 +61,7 @@ Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out) {
         mat_tmp[0][i] = (float)mat_in[0][i];
     }
 
-    for (int iter = 0; iter < 60; iter++) {
+    for (int iter = 0; iter < iteration; iter++) {
         for (int x = 1; x < mat_out.getRowNum()-1; x++) {
             for (int y = 1; y < mat_out.getColNum()-1; y++) {
                 mat_tmp[x][y] = mat_out[x][y] + gradient(mat_out, x, y);

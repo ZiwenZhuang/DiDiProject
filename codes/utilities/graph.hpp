@@ -15,7 +15,7 @@ template<class T>
 void graph<T>::create_road(T la1,T lo1, T la2, T lo2){
 	int i;
 	int index1,index2,count=0;
-	printf("Requested to generate roads on graph with %i nodes\n",now_i);
+	// printf("Requested to generate roads on graph with %i nodes\n",now_i);
 	for(i=0;i<now_i;i++){
 		if(count==2){break;}
 		if(equal(adj_l[i]->pos.first,la1) && equal(adj_l[i]->pos.second,lo1)){

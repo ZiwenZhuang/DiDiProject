@@ -15,7 +15,7 @@ template<class T>
 void graph<T>::create_road(T la1,T lo1, T la2, T lo2){
 	int i;
 	int index1,index2,count=0;
-	printf("%d\n",now_i);
+	printf("Requested to generate roads on graph with %i nodes\n",now_i);
 	for(i=0;i<now_i;i++){
 		if(count==2){break;}
 		if(equal(adj_l[i]->pos.first,la1) && equal(adj_l[i]->pos.second,lo1)){
@@ -106,16 +106,18 @@ std::pair<int, int>* acquire_node_list(string filename, int &node_number) {
 	node_file.open(filename, ios_base::in);
 	if (!node_file.is_open()) {
 		cerr << "Could not open the read file when try to read the node number.\n";
+		cerr << "\tThe file name is " << filename << endl;
 		exit(0);
 	}
 
 	// iterate through the file and get the number of nodes
 	int count = 0; string line; std::getline(node_file, line);
-	while (line != "") {
+	while (!(node_file.eof())) {
 		count++;
 		std::getline(node_file, line);
 	}
 	node_file.close();
+	cout << "acquiring nodes: found " << count << " nodes in total\n";
 	// Now 'count' contains the number of nodes
 
 	node_number = count;

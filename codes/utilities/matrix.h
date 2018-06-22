@@ -40,8 +40,7 @@ class Matrix {
         is set.
         */
         void set_data(T*);
-        void setRowNum(unsigned int num);
-        void setColNum(unsigned int num);
+        void setSize(unsigned int row, unsigned int col);
         T* get_data();
         unsigned int getRowNum();
         unsigned int getColNum();

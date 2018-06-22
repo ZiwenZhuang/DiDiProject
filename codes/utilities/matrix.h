@@ -63,8 +63,18 @@ class Matrix {
 template<class T> int writeMatrix(string filename, Matrix<T> &target);
 template<class T> int readMatrix(string filename, Matrix<T> &target);
 
-// Add patches on the matrix of to make the dots more visiable
-template<class T> void add_patch(Matrix<T> &target, std::pair<int, int>* nodes, int nodes_num\
+/* Add patches on the matrix of to make the dots more visiable
+    The three type is the type of three channel of matrix.
+*/
+template<class T, class Y, class U>
+void add_patch(std::pair<int, int>* nodes, int nodes_num\
+        , Matrix<T> matrixR, Matrix<Y> matrixG, Matrix<U> matrixB\
+        , T patch_valueR, Y patch_valueG, U patch_valueB\
+        , int patch_size = 2);
+/* Add patches on only one channel
+*/
+template<class T>
+void add_patch(Matrix<T> &target, std::pair<int, int>* nodes, int nodes_num\
     , T patch_value, int patch_size = 2);
 
 #include "matrix.tpp"

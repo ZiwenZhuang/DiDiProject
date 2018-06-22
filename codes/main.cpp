@@ -254,10 +254,14 @@ int main(int argc, char *argv[]) {
         // (which is just x, y coordinates)
 
         // Generate the nodes patches that are recognized
-        Matrix<int> nodes_marks = to_display;
-        add_patch<int>(nodes_marks, node_list, node_number, 0, 3);
-        add_patch<int>(to_display, node_list, node_number, 1, 3);
-        pgm_ASCII::write_image_3C(to_display, nodes_marks, to_display, "../demo/marked_nodes.ppm");
+        Matrix<int> nodes_marksR = to_display;
+        Matrix<int> nodes_marksG = to_display;
+        Matrix<int> nodes_marksB = to_display;
+        add_patch(node_list, node_number\
+            , nodes_marksR, nodes_marksG, nodes_marksB\
+            , 1, 1, 0\
+            , 3);
+        pgm_ASCII::write_image_3C(nodes_marksR, nodes_marksG, nodes_marksB, "../demo/marked_nodes.ppm");
 
         // Constructing the graph
         graph<int> graph (node_number);
@@ -266,17 +270,20 @@ int main(int argc, char *argv[]) {
         }
 
         // Recognizing between each nodes whether there are direct roads
+        cout << "Connecting the nodes\n";
         for (int i = 0; i < node_number; i++) {
             // checking the i-th nodes neighbors (index greater than i)
-            for (int j = i; j < node_number; j++) {
+            for (int j = i+1; j < node_number; j++) {
                 // if this two node is neighbor, connect them in Graph object
                 // Given the processed matrix.
                 if (check_connected(to_display, node_list[i], node_list[j])) {
                     graph.create_road(node_list[i].first, node_list[i].second,\
                         node_list[j].first, node_list[j].second);
+                    cout << "\tcreate edges on node |" << i << "| and |" << j << "|\n";
                 }
             }
         }
+        cout << "Done!\n";
 
         int a, b; // input node index to search route
         a = node_number + 1;
@@ -289,10 +296,27 @@ int main(int argc, char *argv[]) {
         // Acquire path
         std::pair<std::pair<int,int>*,int> result = graph.path(node_list[a], node_list[b]);
 
-        Matrix<int> paths = to_display;
-        add_patch<int>(paths, result.first, result.second, 0, 3);
-        add_patch<int>(to_display, result.first, result.second, 1, 3);
-        pgm_ASCII::write_image_3C(to_display, to_display, paths, "../demo/nodes_on_the_pathway.ppm");
+        // Display the node in the path
+        cout << endl;
+        for (int i = 0; i < result.second; i++) {
+            cout << "\tnode in the path: (" << result.first[i].first << ", " << result.first[i].second << ")\n";
+        }
+        Matrix<float> pathsR = temp_img;
+        Matrix<float> pathsG = temp_img;
+        Matrix<float> pathsB = temp_img;
+        add_patch<float>(result.first, result.second\
+            , pathsR, pathsG, pathsB\
+            , 0.f, 2800.f, 100.f\
+            , 3);
+        add_patch<float>(&(node_list[a]), 1\
+            , pathsR, pathsG, pathsB\
+            , 2500.f, 280.f, 100.f\
+            , 3);
+        add_patch<float>(&(node_list[b]), 1\
+            , pathsR, pathsG, pathsB\
+            , 2500.f, 280.f, 100.f\
+            , 3);
+        pgm_ASCII::write_image_3C(pathsR, pathsG, pathsB, "../demo/nodes_on_the_pathway.ppm");
         
 
     } else {

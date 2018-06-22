@@ -37,7 +37,7 @@ private:
 	//template<typename T>
 public:
 	friend class graph<T>;
-	node(T la, T lo,int num):pos(std::pair<T,T>(lo,la)),neighbor_num(0){
+	node(T la, T lo,int num):pos(std::pair<T,T>(la,lo)),neighbor_num(0){
 		neighbor=new int[num];
 	};
 	node():neighbor_num(0){};

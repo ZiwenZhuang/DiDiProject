@@ -109,6 +109,24 @@ template <class T> int readMatrix(string filename, Matrix<T> &target) {
     cout << "Write matrix to " << filename << " done!\n";
     return 0;
 }
+template<class T, class Y, class U>
+void add_patch(std::pair<int, int>* nodes, int nodes_num\
+        , Matrix<T> matrixR, Matrix<Y> matrixG, Matrix<U> matrixB\
+        , T patch_valueR, Y patch_valueG, U patch_valueB\
+        , int patch_size) {
+    for (int i = 0; i < nodes_num; i++) {
+        matrixR[nodes[i].first][nodes[i].second] = patch_valueR;
+        matrixG[nodes[i].first][nodes[i].second] = patch_valueG;
+        matrixB[nodes[i].first][nodes[i].second] = patch_valueB;
+        for (int a = (0-patch_size); a <= patch_size; a++) {
+            for (int b = (0-patch_size); b <= patch_size; b++) {
+                matrixR[nodes[i].first + a][nodes[i].second + b] = patch_valueR;
+                matrixG[nodes[i].first + a][nodes[i].second + b] = patch_valueG;
+                matrixB[nodes[i].first + a][nodes[i].second + b] = patch_valueB;
+            }
+        }
+    }
+}
 template<class T>
 void add_patch(Matrix<T> &target, std::pair<int, int>* nodes, int nodes_num\
     , T patch_value, int patch_size) {

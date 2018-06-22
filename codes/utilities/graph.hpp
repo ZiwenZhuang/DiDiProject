@@ -115,6 +115,7 @@ static std::pair<int, int> extractNumbers(string str) {
 }
 
 std::pair<int, int>* acquire_node_list(string filename, int &node_number) {
+	cout << "Acquiring node list... ";
 	std::fstream node_file;
 	node_file.open(filename, ios_base::in);
 	if (!node_file.is_open()) {
@@ -130,7 +131,7 @@ std::pair<int, int>* acquire_node_list(string filename, int &node_number) {
 		std::getline(node_file, line);
 	}
 	node_file.close();
-	cout << "acquiring nodes: found " << count << " nodes in total\n";
+	cout << "acquiring nodes: found " << count << " nodes in total... ";
 	// Now 'count' contains the number of nodes
 
 	node_number = count;
@@ -145,7 +146,7 @@ std::pair<int, int>* acquire_node_list(string filename, int &node_number) {
 		getline(node_file, line);
 		to_return[i] = extractNumbers(line);
 	}
-
+	cout << "done!\n";
 	return to_return;
 }
 
@@ -178,7 +179,7 @@ std::pair<std::pair<T,T>*,int> graph<T>::path(std::pair<T,T> a,std::pair<T,T> b)
 	}
 	dist[start]=distance(start,end);
 	min=Find_Min(visited,dist,now_i);
-	while(min!=std::numeric_limits<double>::infinity()){
+	while(min!=-1){
 		visited[min]=true;
 		if (min == end){
 			found=true;
@@ -212,7 +213,7 @@ std::pair<std::pair<T,T>*,int> graph<T>::path(std::pair<T,T> a,std::pair<T,T> b)
 int Find_Min(bool* V, double* L,int size){
 	int i=0;
 	double min_distance=std::numeric_limits<double>::infinity();
-	int min_index;
+	int min_index=-1;
 	for (i=0;i<size;i++){
 		if (V[i]==false && L[i]<min_distance){
 			min_distance=L[i];

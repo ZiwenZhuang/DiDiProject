@@ -36,9 +36,10 @@ namespace pgm_ASCII {
     */
     template <class T> int write_image(Matrix<T> &target, string filename);
 
-    /* Write a 3 channel ppm file, which requires three matrix as three channel
+    /* Write a 3 channel ppm file, which requires three matrix as three channel.
+        Three types has to be number type such as int/float/double.
     */
-    template <class T> int write_image_3C(Matrix<T> &targetR\
+    template <class T, class U, class Y> int write_image_3C(Matrix<T> &targetR\
 		, Matrix<T> &targetG, Matrix<T> &targetB, string filename);
 }
 

@@ -44,7 +44,7 @@ which is used to compared with the distance of two coordinates. (In Manhantan Di
 If they are too far away, this function will return false directly.
 */
 bool check_connected(Matrix<int> &image, const std::pair<int, int> &nodeA, const std::pair<int, int> &nodeB\
-    , int threshold = 2000, int line_width = 1, int maxSegments = 0, int maxLength = 100);
+    , int threshold = 1, int line_width = 2, int maxSegments = 4, int maxLength = 500);
 
 #include "imageProcess.tpp"
 

@@ -149,7 +149,7 @@ std::pair<int, int>* acquire_node_list(string filename, int &node_number) {
 	return to_return;
 }
 template <class T>
-int graph<T>::Min(bool*& visited,double*& distance){
+static int graph<T>::Min(bool*& visited,double*& distance){
 	int i =0;
 	int min=-1;
 	double mindistance = std::numeric_limits<double>::infinity();
@@ -176,7 +176,7 @@ double graph<T>::distance(int a, int b){
 template<class T>
 std::pair<std::pair<T,T>*,int> graph<T>::path(std::pair<T,T> a,std::pair<T,T> b){
 	bool visited[now_i];
-	double distance[now_i];
+	double dist[now_i];				/* distance*/
 	int previous[now_i];
 	int i=0;
 	bool found=false;
@@ -184,14 +184,14 @@ std::pair<std::pair<T,T>*,int> graph<T>::path(std::pair<T,T> a,std::pair<T,T> b)
 	std::pair<T,T>* Path=new std::pair<T,T> [now_i];
 	int length=0;
 	int min;
-	int start=find_node(a[0],a[1]);
-	int end = find_node(b[0],b[1]);
+	int start=find_node(a.first,a.second);
+	int end = find_node(b.first,b.second);
 	for (i=0;i<now_i;i++){
 		visited[i]=false;
-		distance[i]=std::numeric_limits<double>::infinity();
+		dist[i]=std::numeric_limits<double>::infinity();
 		previous[i]=-1;
 	}
-	distance[start]=distance(start,end);
+	dist[start]=distance(start,end);
 	min=Min(visited,distance);
 	while(min!=std::numeric_limits<double>::infinity()){
 		visited[min]=true;
@@ -204,8 +204,8 @@ std::pair<std::pair<T,T>*,int> graph<T>::path(std::pair<T,T> a,std::pair<T,T> b)
 			if (visited[neighbor_i]==true){
 				continue;
 			}
-			if (distance[neighbor_i] > distance(min,neighbor_i)+distance(neighbor_i,end)){
-				distance[neighbor_i]=distance(min,neighbor_i)+distance(neighbor_i,end);
+			if (dist[neighbor_i] > distance(min,neighbor_i)+distance(neighbor_i,end)){
+				dist[neighbor_i]=distance(min,neighbor_i)+distance(neighbor_i,end);
 				previous[neighbor_i]=min;
 			}
 		}

@@ -27,7 +27,7 @@ Now we need to find a way to fliter the noise and recognize cross roads (in term
   Since the data is too big, we save the footprints in a matrix file. But there are still some other operations that requires the data. Thus, you need to put two data file under the /data folder. Please be aware of the file name has to be exactly 'gps_20161101' and 'order_20161101'.
 
 2. Compile the file
-  a. linux envoironment
+  a. linux environment
     Simply move your directory to the /code folder, then simply type:
     '''makefile
     make
@@ -47,3 +47,6 @@ Now we need to find a way to fliter the noise and recognize cross roads (in term
   ./main.out demo
   '''
   The process is displayed on the screen, and then it will shows how many nodes are recognized connected. And you should input which nodes you want the program find connected and the path. Then you can find three file under the /demo folder. And you can see the nodes that are in the path way and those nodes recognized by the program.
+
+# Report Git repo on overleaf
+  [DiDi Project report]{https://git.overleaf.com/17224708mvbtnjwqrwzb}

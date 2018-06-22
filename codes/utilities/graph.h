@@ -21,7 +21,9 @@ public:
 	int find_node(T a,T b);
 	void create_road(T lo1,T la1, T lo2, T la2);
 	//bool is_connected(T la1, T lo1, T la2, Tlo2);
-	std::pair<std::pair<T>*,int> search(std::pair<int,int>,std::pair<int,int>);
+	double distance(int a, int b);
+	int Min(bool*& visited, double*& distance);
+	std::pair<std::pair<T,T>*,int> path(std::pair<T,T> a,std::pair<T,T> b);
 	std::pair<node<T>**,int> find_neighbor(T lo, T la);
 };
 

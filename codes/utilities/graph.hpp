@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-
+#include <math.h>
 
 using namespace std;
 
@@ -79,6 +79,8 @@ int graph<T>::find_node(T a,T b){
 	return -1;
 }
 
+
+
 static std::pair<int, int> extractNumbers(string str) {
 	std::pair<int, int> to_return = std::pair<int, int>(0, 0);
 	int flag = 0; // 0 for the previous char is not a number
@@ -144,166 +146,76 @@ std::pair<int, int>* acquire_node_list(string filename, int &node_number) {
 
 	return to_return;
 }
-
-template<class Type>
-class Heap{
-	
-  public:
-  	int Heap_Size;
-	int Heap_Capacity;
-	Type * array;
-	int mode;				/* mode is 0 for MinHeap, 1 for MaxHeap */
-
-  	Heap(int n, int mode);
-  	~Heap();
-  	Type top() const;
-  	Type pop();
-  	void push(Type const a);
-  	bool IsFull() const;
-  	void PrintHeap() const;
-};
-template <class Type>
-Heap<Type>::Heap( int n ,int b){
-	Heap_Size = 0;
-	Heap_Capacity=n;
-	array=new (nothrow) Type [n+1];
-	array[0]=Node(0,0);
-	mode = b;
-}
-template <class Type>
-Heap<Type>::~Heap(){
-	delete[] array;
-}
-
-template <class Type>
-Type Heap<Type>::top() const{
-	return array[1];
-}
-template<class Type>
-bool Heap<Type>::IsFull() const{
-	return(Heap_Size == Heap_Capacity);
-}
-template<class Type>
-Type Heap<Type>::pop(){
-	Type pop;
-	int i=1;						/*index*/
-	Type temp;
-	pop=array[1];
-	array[1]=array[Heap_Size];
-	Heap_Size--;
-	while (2*i <= Heap_Size){		/* left child is in the heap */
-		if (2*i + 1 <= Heap_Size){	/* right child is in the heap */
-			if (mode == 0){			/* MinHeap */
-				if(array[2*i + 1].GetKey()>array[2*i].GetKey()){	/*Left child is smaller */
-					if (array[i].GetKey()> array[2*i].GetKey()){	/* array[i] is not the smallest, change*/
-						temp= array[i];
-						array[i]=array[2*i];
-						array[2*i]=temp;
-						i = 2*i;
-					}else{						
-						break;					/* array[i] is already the smallest. break*/
-					}
-				}else{							/* Right child is smaller */
-					if(array[i].GetKey()> array[2*i+1].GetKey()){	/* array[i] is not the smallest, change*/
-						temp= array[i];
-						array[i]=array[2*i+1];
-						array[2*i+1]=temp;
-						i = 2*i+1;
-					}else{
-						break;
-					}
-				}
-			}else{								/* MaxHeap*/
-				if(array[2*i + 1].GetKey()>array[2*i].GetKey()){	/*Right child is larger */
-					if (array[i].GetKey() < array[2*i +1].GetKey()){	/* array[i] is not the largest, change*/
-						temp= array[i];
-						array[i]=array[2*i+1];
-						array[2*i+1]=temp;
-						i = 2*i + 1;
-					}else{						
-						break;					/* array[i] is already the largest. break*/
-					}
-				}else{							/* Left child is larger */
-					if(array[i].GetKey()<= array[2*i].GetKey()){	/* array[i] is not the largest, change*/
-						temp= array[i];
-						array[i]=array[2*i];
-						array[2*i]=temp;
-						i = 2*i;
-					}else{
-						break;
-					}
-				}
-			}
-		}else{									/* Left child is in the array, right child is missing*/
-			if (mode == 0){
-				if (array[i].GetKey()< array[2*i].GetKey()){
-					break;
-				}else{
-					temp=array[i];
-					array[i]=array[2*i];
-					array[2*i]=temp;
-					break;
-				}
-			}else{
-				if(array[i].GetKey()>array[2*i].GetKey()){
-					break;
-				}else{
-					temp=array[i];
-					array[i]=array[2*i];
-					array[2*i]=temp;
-					break;
-				}
-			}
-		}	
+template <class T>
+int graph<T>::Min(bool*& visited,double*& distance){
+	int i =0;
+	int min=-1;
+	double mindistance = std::numeric_limits<double>::infinity();
+	for (i;i<now_i;i++){
+		if (visited[i]==true){
+			continue;
+		}
+		if (visited[i]<mindistance){
+			mindistance=visited[i];
+			min=i;
+		}
 	}
-	return pop;
+	return min;
 }
-template <class Type>
-void Heap<Type>::push(Type const a){
-	int i;
-	Type temp;
-	Heap_Size++;
-	array[Heap_Size]=a;
-	i = Heap_Size;
-	while (i>1){
-		if(mode == 0){
-			if (array[i].GetKey() < array[i/2].GetKey()){
-				temp=array[i];
-				array[i]=array[i/2];
-				array[i/2]=temp;
-				i=i/2;
-			}else{
-				break;
+
+template<class T>
+double graph<T>::distance(int a, int b){
+	T x1=adj_l[a]->pos[0];
+	T y1=adj_l[a]->pos[1];
+	T x2=adj_l[b]->pos[0];
+	T y2=adj_l[b]->pos[1];
+	return sqrt(power((x2-x1),2)+power((y2-y1),2));
+}
+template<class T>
+std::pair<std::pair<T,T>*,int> graph<T>::path(std::pair<T,T> a,std::pair<T,T> b){
+	bool visited[now_i];
+	double distance[now_i];
+	int previous[now_i];
+	int i=0;
+	bool found=false;
+	int neighbor_i;
+	std::pair<T,T>* Path=new std::pair<T,T> [now_i];
+	int length=0;
+	int min;
+	int start=find_node(a[0],a[1]);
+	int end = find_node(b[0],b[1]);
+	for (i=0;i<now_i;i++){
+		visited[i]=false;
+		distance[i]=std::numeric_limits<double>::infinity();
+		previous[i]=-1;
+	}
+	distance[start]=distance(start,end);
+	min=Min(visited,distance);
+	while(min!=std::numeric_limits<double>::infinity()){
+		visited[min]=true;
+		if (min == end){
+			found=true;
+			break;
+		}
+		for(i=0;i<adj_l[min]->neighbor_num;i++){
+			neighbor_i=adj_l[min]->neighbor[i];
+			if (visited[neighbor_i]==true){
+				continue;
 			}
-		}else{
-			if(array[i].GetKey() > array[i/2].GetKey()){
-				temp = array[i];
-				array[i]=array[i/2];
-				array[i/2]=temp;
-				i=i/2;
-			}else{
-				break;
+			if (distance[neighbor_i] > distance(min,neighbor_i)+distance(neighbor_i,end)){
+				distance[neighbor_i]=distance(min,neighbor_i)+distance(neighbor_i,end);
+				previous[neighbor_i]=min;
 			}
 		}
 	}
-}
-
-template <class Type>
-void Heap<Type>::PrintHeap() const{
-	int i=1;
-	int j=0;
-	while ((1<< j) < Heap_Size +1){
-		printf("(%d, %d)",array[i].priority, array[i].least_char);
-		i++;
-		while (i >= (1<< j) && i <(1<< (j+1))){
-			if(i <= Heap_Size){
-				printf(" (%d, %d)", array[i].priority, array[i].least_char);
-			}else{
-				printf(" S");
-			}
-			i ++;
-		}
-		printf("\n");
-		j++;
+	if (found==false){
+		return std::pair<T,T>(nullptr,0);
 	}
+	length=0;
+	while (previous[end]!=-1){
+		Path[length]=adj_l[end]->pos;
+		length++;
+		end=previous[end];
+	}
+	return std::pair<T,T>(Path,length);
 }

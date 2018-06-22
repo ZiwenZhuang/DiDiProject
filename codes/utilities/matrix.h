@@ -68,7 +68,7 @@ template<class T> int readMatrix(string filename, Matrix<T> &target);
 */
 template<class T, class Y, class U>
 void add_patch(std::pair<int, int>* nodes, int nodes_num\
-        , Matrix<T> matrixR, Matrix<Y> matrixG, Matrix<U> matrixB\
+        , Matrix<T> &matrixR, Matrix<Y> &matrixG, Matrix<U> &matrixB\
         , T patch_valueR, Y patch_valueG, U patch_valueB\
         , int patch_size = 2);
 /* Add patches on only one channel

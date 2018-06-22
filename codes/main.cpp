@@ -239,7 +239,7 @@ int main(int argc, char *argv[]) {
         anios_diff(order_img, temp_img);
         lighter(temp_img, temp_img, 3000);
         Matrix<int> to_display (order_img.getRowNum(), order_img.getColNum());
-        two_level(temp_img, to_display, 2000);
+        two_level(temp_img, to_display, 500);
         
         // Generate the preprocessed image
         pgm_ASCII::write_image(to_display, "../demo/prepeocessed.pgm");
@@ -301,20 +301,20 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < result.second; i++) {
             cout << "\tnode in the path: (" << result.first[i].first << ", " << result.first[i].second << ")\n";
         }
-        Matrix<float> pathsR = temp_img;
-        Matrix<float> pathsG = temp_img;
-        Matrix<float> pathsB = temp_img;
-        add_patch<float>(result.first, result.second\
+        Matrix<int> pathsR = nodes_marksR;
+        Matrix<int> pathsG = nodes_marksG;
+        Matrix<int> pathsB = nodes_marksB;
+        add_patch<int, int, int>(result.first, result.second\
             , pathsR, pathsG, pathsB\
-            , 0.f, 2800.f, 100.f\
+            , 0, 1, 1\
             , 3);
-        add_patch<float>(&(node_list[a]), 1\
+        add_patch<int, int, int>(&(node_list[a]), 1\
             , pathsR, pathsG, pathsB\
-            , 2500.f, 280.f, 100.f\
+            , 0, 0, 1\
             , 3);
-        add_patch<float>(&(node_list[b]), 1\
+        add_patch<int, int, int>(&(node_list[b]), 1\
             , pathsR, pathsG, pathsB\
-            , 2500.f, 280.f, 100.f\
+            , 0, 0, 1\
             , 3);
         pgm_ASCII::write_image_3C(pathsR, pathsG, pathsB, "../demo/nodes_on_the_pathway.ppm");
         

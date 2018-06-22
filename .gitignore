@@ -8,3 +8,5 @@ codes/main.out
 codes/pixel
 codes/a.out
 codes/nouse.cpp
+*.zip
+Report-Latex/*

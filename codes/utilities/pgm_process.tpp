@@ -103,7 +103,6 @@ namespace pgm_ASCII {
                 }
             }
             cout << endl;
-            return 0;
         } else {
             file << endl << set_great;
             for (int i = target.getColNum()-1; i >= 0; i--) {
@@ -113,8 +112,62 @@ namespace pgm_ASCII {
                 }
             }
             cout << endl;
-            return 0;
         }
+        return 0;
     }
 
+    template <class T> int write_image_3C(Matrix<T> &targetR\
+		, Matrix<T> &targetG, Matrix<T> &targetB, string filename) {
+        if (!targetR.initialized() || !targetG.initialized() || !targetB.initialized()) {
+            fprintf(stderr, "Error detected, you let me write a matrix that has no data");
+            return -1;
+        }
+        if (targetR.getRowNum() != targetG.getRowNum() || targetB.getRowNum() != targetG.getRowNum()\
+            || targetR.getColNum() != targetG.getColNum() || targetB.getColNum() != targetG.getColNum()) {
+            cerr << "different demension detected in three channel!\n";
+            return -1;
+        }
+        // Write basic information first
+        ofstream file; file.open(filename, ios_base::out);
+        file << "P3\n" << targetR.getRowNum() << " " << targetR.getColNum();
+        // Detect the greatest value
+        T greatest; T* pValR = targetR.get_data();
+        T* pValG = targetG.get_data(); T* pValB = targetB.get_data();
+        greatest = T();
+        for (unsigned int i = 1; i < targetR.getRowNum() * targetR.getColNum(); i++) {
+            greatest = (greatest < pValR[i])? pValR[i]: greatest;
+            greatest = (greatest < pValG[i])? pValG[i]: greatest;
+            greatest = (greatest < pValB[i])? pValB[i]: greatest;
+        }
+        // set the greatest value manually, in case the greatest value is too large to diaplay.
+        unsigned int set_great = 1024;
+        if (greatest <= set_great) {
+            file << endl << greatest;
+            for (int i = targetR.getColNum()-1; i >= 0; i--) {
+                file << endl << ((targetR[0][i] > 0) ? (targetR[0][i]) : 0);
+                file << "\t" << ((targetG[0][i] > 0) ? (targetG[0][i]) : 0);
+                file << "\t" << ((targetB[0][i] > 0) ? (targetB[0][i]) : 0);
+                for (unsigned int j = 1; j < targetR.getRowNum(); j++) {
+                    file << "\t" << ((targetR[j][i] > 0) ? (targetR[j][i]) : 0);
+                    file << "\t" << ((targetG[j][i] > 0) ? (targetG[j][i]) : 0);
+                    file << "\t" << ((targetB[j][i] > 0) ? (targetB[j][i]) : 0);
+                }
+            }
+            cout << endl;
+        } else {
+            file << endl << set_great;
+            for (int i = targetR.getColNum()-1; i >= 0; i--) {
+                file << endl << ((targetR[0][i] > 0) ? (targetR[0][i] * set_great / greatest) : 0);
+                file << "\t" << ((targetG[0][i] > 0) ? (targetG[0][i] * set_great / greatest) : 0);
+                file << "\t" << ((targetB[0][i] > 0) ? (targetB[0][i] * set_great / greatest) : 0);
+                for (unsigned int j = 1; j < targetR.getRowNum(); j++) {
+                    file << "\t" << ((targetR[j][i] > 0) ? (targetR[j][i] * set_great / greatest) : 0);
+                    file << "\t" << ((targetG[j][i] > 0) ? (targetG[j][i] * set_great / greatest) : 0);
+                    file << "\t" << ((targetB[j][i] > 0) ? (targetB[j][i] * set_great / greatest) : 0);
+                }
+            }
+            cout << endl;
+        }
+        return 0;
+    }
 }

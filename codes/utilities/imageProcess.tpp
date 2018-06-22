@@ -54,6 +54,7 @@ float gradient(Matrix<float> &mat, int centerX, int centerY) {
 }
 
 Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out) {
+    cout << "Start applying Anisotropic diffusion method";
     Matrix<float> mat_tmp (mat_in.getRowNum(), mat_in.getColNum());
     for (int i = 0; i < (mat_in.getRowNum() * mat_in.getColNum()); i++) {
         mat_out[0][i] = (float)mat_in[0][i];
@@ -68,7 +69,7 @@ Matrix<float>& anios_diff(Matrix<int> &mat_in, Matrix<float> &mat_out) {
         }
         memcpy(mat_out[0], mat_tmp[0], (mat_in.getColNum() * mat_in.getRowNum() * sizeof(int)));
     }
-
+    cout << "Done applying Anisotropic diffusion method\n";
     return mat_out;
 }
 
@@ -89,10 +90,13 @@ Matrix<T>& lighter(Matrix<T> &mat_in, Matrix<T> &mat_out, float max) {
 }
 
 bool check_connected(Matrix<int> &image, const std::pair<int, int> &nodeA, const std::pair<int, int> &nodeB\
-    , int threshold, int line_width, int maxSegments) {
-    double k, b; // the two parameters that represents a line
-    k = (double)(nodeA.second - nodeB.second) / (nodeA.first - nodeB.first);
-    b = (double)nodeA.second - (k * nodeA.first);
+    , int threshold, int line_width, int maxSegments, int maxLength) {
+    if ((abs(nodeA.first - nodeB.first) + abs(nodeA.second - nodeB.second)) > maxLength) {
+        return false;
+    }
+    float k, b; // the two parameters that represents a line
+    k = (float)(nodeA.second - nodeB.second) / (nodeA.first - nodeB.first);
+    b = (float)nodeA.second - (k * nodeA.first);
 
     int startX, endX; // set the start and end point of the line detection process
     if (nodeA.first < nodeB.first) {

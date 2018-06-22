@@ -137,15 +137,20 @@ int main(int argc, char *argv[]) {
         cout << "start the program with argv[1]: " << argv[1] << endl;
         paths_img.set_data(pixel(gps_file, \
             paths_img.getRowNum(), paths_img.getColNum()));
+        writeMatrix("../data/path_matrix.matrix", paths_img);
+        Matrix<int> &order_img = paths_img;
+        
+        // Matrix<int> order_img;
+        // readMatrix("../data/path_matrix.matrix", order_img);
 
         // Apply Aniostropic diffusion method to try to eliminate the noise
-        Matrix<float> temp_img (paths_img.getRowNum(), paths_img.getColNum());
-        anios_diff(paths_img, temp_img);
+        Matrix<float> temp_img (order_img.getRowNum(), order_img.getColNum());
+        anios_diff(order_img, temp_img);
         lighter(temp_img, temp_img, 3000);
-        Matrix<int> to_display (paths_img.getRowNum(), paths_img.getColNum());
+        Matrix<int> to_display (order_img.getRowNum(), order_img.getColNum());
         two_level(temp_img, to_display, 2000);
 
-        string filename = "node_array";
+        string filename = "../data/node_array";
         // Get the list of nodes recognized by the python program
         int node_number = 0;
         std::pair<int, int>* node_list = acquire_node_list(filename, node_number);
@@ -171,9 +176,7 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
-
-
-
+        
     } else {
         usage();
     }

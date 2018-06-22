@@ -29,12 +29,17 @@ namespace pgm_ASCII {
     template <class T> int read_image(Matrix<T> &target, ifstream &file);
     template <class T> int read_image(Matrix<T> &target, fstream &file);
 
-    /* These methods will write the given matrix into the file once.
+    /* This methods will write the given matrix into the file once.
         Also, it returns 0 on sucess; -1 on failed;
         And you are only allowed to provide the file name instead of any form of
     file stream.
     */
     template <class T> int write_image(Matrix<T> &target, string filename);
+
+    /* Write a 3 channel ppm file, which requires three matrix as three channel
+    */
+    template <class T> int write_image_3C(Matrix<T> &targetR\
+		, Matrix<T> &targetG, Matrix<T> &targetB, string filename);
 }
 
 #include "pgm_process.tpp"

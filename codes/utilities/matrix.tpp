@@ -30,11 +30,16 @@ template <class T> void Matrix<T>::set_data(T* data) {
     }
     this->data = data;
 }
-template <class T> void Matrix<T>::setRowNum(unsigned int num) {
-    if (!this->initialized()) this->num_rows = num;
-}
-template <class T> void Matrix<T>::setColNum(unsigned int num) {
-    if (!this->initialized()) this->num_cols = num;
+template <class T> void Matrix<T>::setSize(unsigned int row, unsigned int col) {
+    if (!this->initialized()) {
+        this->num_rows = row;
+        this->num_cols = col;
+        this->data = new T [row * col];
+    } else {
+        cerr << "Your are changing a matrix to different size and we didn't do that" << endl;
+        exit(0);
+    }
+    cout << "Initialized matrix into " << row << ", " << col << " dimension\n";
 }
 template <class T> T* Matrix<T>::get_data() {
     return this->data;
@@ -72,7 +77,10 @@ template <class T> int writeMatrix(string filename, Matrix<T> &target) {
     }
     file << typeid(T).name() << endl;
     file << target.getRowNum() << " " << target.getColNum() << endl;
-    file.write(target.get_data(), target.getRowNum() * target.getColNum() * sizeof(T));
+    for (int i = 0; i < target.getRowNum() * target.getColNum(); i++) {
+        file << target[0][i] << endl;
+    }
+    cout << "Read matrix from " << filename << " done\n";
     return 0;
 }
 template <class T> int readMatrix(string filename, Matrix<T> &target) {
@@ -80,18 +88,18 @@ template <class T> int readMatrix(string filename, Matrix<T> &target) {
     if (!file.is_open()) {
         cerr << "Error detected when try to read " << filename << endl;
         return -1;
-    } else if (target.initialized()) {
-        cerr << "You cannot have write to a initialized matrix";
-        return -1;
     }
     string type_name; file >> type_name;
     if (type_name.compare(typeid(T).name()) != 0) {
         cerr << "You should pass in a matrix with type: " << type_name << endl;
         return -1;
     }
-    unsigned int num;
-    file >> num; target.setRowNum(num);
-    file >> num; target.setColNum(num);
-    file.read(target.get_data(), target.getRowNum() * target.getColNum() * sizeof(T));
+    unsigned int row, col;
+    file >> row; file >> col;
+    target.setSize(row, col);
+    for (int i = 0; i < row*col; i++) {
+        file >> target[0][i];
+    }
+    cout << "Write matrix to " << filename << " done!\n";
     return 0;
 }

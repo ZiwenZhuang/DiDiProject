@@ -39,9 +39,12 @@ Matrix<T>& lighter(Matrix<T> &mat_in, Matrix<T> &mat_out, float max = 5000);
 
 /* This function view through the image and check if there are really
 a stright line connecting them.
+    The maxLength parameter is used to decided the maximum possible length of the road,
+which is used to compared with the distance of two coordinates. (In Manhantan Distance)
+If they are too far away, this function will return false directly.
 */
 bool check_connected(Matrix<int> &image, const std::pair<int, int> &nodeA, const std::pair<int, int> &nodeB\
-    , int threshold = 2000, int line_width = 1, int maxSegments = 0);
+    , int threshold = 2000, int line_width = 1, int maxSegments = 0, int maxLength = 100);
 
 #include "imageProcess.tpp"
 

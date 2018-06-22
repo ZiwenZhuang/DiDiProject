@@ -148,30 +148,15 @@ std::pair<int, int>* acquire_node_list(string filename, int &node_number) {
 
 	return to_return;
 }
-template <class T>
-static int graph<T>::Min(bool*& visited,double*& distance){
-	int i =0;
-	int min=-1;
-	double mindistance = std::numeric_limits<double>::infinity();
-	for (i;i<now_i;i++){
-		if (visited[i]==true){
-			continue;
-		}
-		if (visited[i]<mindistance){
-			mindistance=visited[i];
-			min=i;
-		}
-	}
-	return min;
-}
+
 
 template<class T>
 double graph<T>::distance(int a, int b){
-	T x1=adj_l[a]->pos[0];
-	T y1=adj_l[a]->pos[1];
-	T x2=adj_l[b]->pos[0];
-	T y2=adj_l[b]->pos[1];
-	return sqrt(power((x2-x1),2)+power((y2-y1),2));
+	T x1=adj_l[a]->pos.first;
+	T y1=adj_l[a]->pos.second;
+	T x2=adj_l[b]->pos.first;
+	T y2=adj_l[b]->pos.second;
+	return sqrt(pow((x2-x1),2)+pow((y2-y1),2));
 }
 template<class T>
 std::pair<std::pair<T,T>*,int> graph<T>::path(std::pair<T,T> a,std::pair<T,T> b){
@@ -192,7 +177,7 @@ std::pair<std::pair<T,T>*,int> graph<T>::path(std::pair<T,T> a,std::pair<T,T> b)
 		previous[i]=-1;
 	}
 	dist[start]=distance(start,end);
-	min=Min(visited,distance);
+	min=Find_Min(visited,dist,now_i);
 	while(min!=std::numeric_limits<double>::infinity()){
 		visited[min]=true;
 		if (min == end){
@@ -209,9 +194,10 @@ std::pair<std::pair<T,T>*,int> graph<T>::path(std::pair<T,T> a,std::pair<T,T> b)
 				previous[neighbor_i]=min;
 			}
 		}
+		min=Find_Min(visited,dist,now_i);
 	}
 	if (found==false){
-		return std::pair<T,T>(nullptr,0);
+		return std::pair<std::pair<T,T>*,int>(nullptr,0);
 	}
 	length=0;
 	while (previous[end]!=-1){
@@ -219,5 +205,19 @@ std::pair<std::pair<T,T>*,int> graph<T>::path(std::pair<T,T> a,std::pair<T,T> b)
 		length++;
 		end=previous[end];
 	}
-	return std::pair<T,T>(Path,length);
+	return std::pair<std::pair<T,T>*,int>(Path,length);
+}
+
+
+int Find_Min(bool* V, double* L,int size){
+	int i=0;
+	double min_distance=std::numeric_limits<double>::infinity();
+	int min_index;
+	for (i=0;i<size;i++){
+		if (V[i]==false && L[i]<min_distance){
+			min_distance=L[i];
+			min_index=i;
+		}
+	}
+	return min_index;
 }

@@ -22,7 +22,6 @@ public:
 	void create_road(T lo1,T la1, T lo2, T la2);
 	//bool is_connected(T la1, T lo1, T la2, Tlo2);
 	double distance(int a, int b);
-	int Min(bool*& visited, double*& distance);
 	std::pair<std::pair<T,T>*,int> path(std::pair<T,T> a,std::pair<T,T> b);
 	std::pair<node<T>**,int> find_neighbor(T lo, T la);
 };
@@ -45,6 +44,7 @@ public:
 	~node(){delete[] neighbor;};
 };
 
+
 /* This method read from file and returns a list of pairs that
 contains each of the node that recognized by python program.
 	Be sure to free the returned pointer when the list of nodes
@@ -52,6 +52,7 @@ are no longer in use.
 */
 std::pair<int, int>* acquire_node_list(string filename, int &node_number);
 
+int Find_Min(bool* V,double* L,int size);
 
 #include "graph.hpp"
 

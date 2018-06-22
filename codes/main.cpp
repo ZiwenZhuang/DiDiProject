@@ -48,6 +48,7 @@ void usage() {
     cout << "\t'get_graph': add the node list to the Graph object and forms the digitalized object\n";
     cout << "\t'lighter': simply make the raw image lighter for visual\n";
     cout << "\t'get_nodes': simply read the node file and put then on a display file 'withnodes.ppm'\n";
+    cout << "\t'demo': perform the demo and all the files will be put in number sequence in ../demo/ directory.\n";
 }
 
 int main(int argc, char *argv[]) {
@@ -199,7 +200,7 @@ int main(int argc, char *argv[]) {
         Matrix<int> to_display (order_img.getRowNum(), order_img.getColNum());
         two_level(temp_img, to_display, 2000);
 
-        string filename = "../data/node_array";
+        string filename = "../data/corner.bin";
         // Get the list of nodes recognized by the python program
         int node_number = 0;
         std::pair<int, int>* node_list = acquire_node_list(filename, node_number);
@@ -225,7 +226,47 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
+
+    } else if (string(argv[1]) == string("demo")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
         
+        Matrix<int> order_img;
+        readMatrix("../data/path_matrix.matrix", order_img);
+
+        // Apply Aniostropic diffusion method to try to eliminate the noise
+        Matrix<float> temp_img (order_img.getRowNum(), order_img.getColNum());
+        anios_diff(order_img, temp_img);
+        lighter(temp_img, temp_img, 3000);
+        Matrix<int> to_display (order_img.getRowNum(), order_img.getColNum());
+        two_level(temp_img, to_display, 2000);
+
+        string filename = "../data/corner.bin";
+        // Get the list of nodes recognized by the python program
+        int node_number = 0;
+        std::pair<int, int>* node_list = acquire_node_list(filename, node_number);
+        // The first is the row index
+        // and the second is column index
+        // (which is just x, y coordinates)
+
+        // Constructing the graph
+        graph<int> graph (node_number);
+        for (int i = 0; i < node_number; i++) {
+            graph.create_node(node_list[i].first, node_list[i].second);
+        }
+
+        // Recognizing between each nodes whether there are direct roads
+        for (int i = 0; i < node_number; i++) {
+            // checking the i-th nodes neighbors (index greater than i)
+            for (int j = i; j < node_number; j++) {
+                // if this two node is neighbor, connect them in Graph object
+                // Given the processed matrix.
+                if (check_connected(to_display, node_list[i], node_list[j])) {
+                    graph.create_road(node_list[i].first, node_list[i].second,\
+                        node_list[j].first, node_list[j].second);
+                }
+            }
+        }
+                
     } else {
         usage();
     }

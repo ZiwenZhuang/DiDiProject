@@ -15,6 +15,12 @@ template <class T> Matrix<T>::Matrix(unsigned int num_rows, unsigned int num_col
     this->num_cols = num_cols;
     this->data = data;
 }
+template <class T> Matrix<T>::Matrix(const Matrix<T> &matrix) {
+    this->num_rows = matrix.num_rows;
+    this->num_cols = matrix.num_cols;
+    this->data = new T [num_rows * num_cols];
+    memcpy(this->data, matrix.data, (this->num_rows * this->num_cols * sizeof(T)));
+}
 template <class T> Matrix<T>::~Matrix() {
     if (this->data != nullptr) delete[] this->data;
 }
@@ -102,4 +108,16 @@ template <class T> int readMatrix(string filename, Matrix<T> &target) {
     }
     cout << "Write matrix to " << filename << " done!\n";
     return 0;
+}
+template<class T>
+void add_patch(Matrix<T> &target, std::pair<int, int>* nodes, int nodes_num\
+    , T patch_value, int patch_size) {
+    for (int i = 0; i < nodes_num; i++) {
+        target[nodes[i].first][nodes[i].second] = patch_value;
+        for (int a = (0-patch_size); a <= patch_size; a++) {
+            for (int b = (0-patch_size); b <= patch_size; b++) {
+                target[nodes[i].first + a][nodes[i].second + b] = patch_value;
+            }
+        }
+    }
 }

@@ -22,6 +22,19 @@ string read_a_line(fstream& file) {
     return one_line;
 }
 
+/* This function only transfroms a list of std::pair<int> base on the given
+square matrix (clock-wise 90 degree)
+*/
+template<class T> // the coordinate type to transform
+void clockwise90(std::pair<T, T>* coordinates, int number, T dimension) {
+    for (int i = 0; i < number; i++) {
+        T x, y;
+        x = coordinates[i].second;
+        y = dimension - coordinates[i].first;
+        coordinates[i] = std::pair<T, T>(x, y);
+    }
+}
+
 void usage() {
     cout << "please specify the usage in the next argument\n";
     cout << "\t'raw': only write the raw image\n";
@@ -33,6 +46,8 @@ void usage() {
     cout << "\t'anios_two_level': apply Anios... method and write result in onlye 2 level\n";
     cout << "\t'graph': Used for storing the vertices and detecting neighbors\n";
     cout << "\t'get_graph': add the node list to the Graph object and forms the digitalized object\n";
+    cout << "\t'lighter': simply make the raw image lighter for visual\n";
+    cout << "\t'get_nodes': simply read the node file and put then on a display file 'withnodes.ppm'\n";
 }
 
 int main(int argc, char *argv[]) {
@@ -133,12 +148,46 @@ int main(int argc, char *argv[]) {
         }
         pgm_ASCII::write_image<int>(output, "../data/anios_lighter.pgm");
 
+    } else if (string(argv[1]) == string("lighter")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
+        
+        Matrix<int> order_img;
+        readMatrix("../data/path_matrix.matrix", order_img);
+        // Apply Aniostropic diffusion method to try to eliminate the noise
+        Matrix<int> temp_img (paths_img.getRowNum(), paths_img.getColNum());
+        lighter(order_img, temp_img, 2000);
+        pgm_ASCII::write_image<int>(temp_img, "../data/lighter.pgm");
+
+    } else if (string(argv[1]) == string("get_nodes")) {
+        cout << "start the program with argv[1]: " << argv[1] << endl;
+        
+        Matrix<int> order_img;
+        readMatrix("../data/path_matrix.matrix", order_img);
+
+        // Apply Aniostropic diffusion method to try to eliminate the noise
+        Matrix<float> temp_img (order_img.getRowNum(), order_img.getColNum());
+        anios_diff(order_img, temp_img);
+        lighter(temp_img, temp_img, 3000);
+        Matrix<int> to_display (order_img.getRowNum(), order_img.getColNum());
+        two_level(temp_img, to_display, 200);
+
+        string filename = "../data/node_array";
+        // Get the list of nodes recognized by the python program
+        int node_number = 0;
+        std::pair<int, int>* node_list = acquire_node_list(filename, node_number);
+        clockwise90(node_list, node_number, (int)order_img.getRowNum());
+        // The first is the row index
+        // and the second is column index
+        // (which is x, y coordinates)
+
+        Matrix<int> nodes_marks = to_display;
+        add_patch<int>(nodes_marks, node_list, node_number, 0, 3);
+        add_patch<int>(to_display, node_list, node_number, 1, 3);
+
+        pgm_ASCII::write_image_3C(to_display, nodes_marks, to_display, "../data/marked_nodes.ppm");
+
     } else if (string(argv[1]) == string("get_graph")) {
         cout << "start the program with argv[1]: " << argv[1] << endl;
-        // paths_img.set_data(pixel(gps_file, \
-        //     paths_img.getRowNum(), paths_img.getColNum()));
-        // writeMatrix("../data/path_matrix.matrix", paths_img);
-        // Matrix<int> &order_img = paths_img;
         
         Matrix<int> order_img;
         readMatrix("../data/path_matrix.matrix", order_img);

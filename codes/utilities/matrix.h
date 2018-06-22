@@ -30,6 +30,7 @@ class Matrix {
         Matrix();
         Matrix(unsigned int num_rows, unsigned int num_cols);
         Matrix(unsigned int num_rows, unsigned int num_cols, T* data);
+        Matrix(const Matrix<T> &);
         ~Matrix();
         bool initialized();
 
@@ -61,6 +62,10 @@ class Matrix {
 // Read and write matrix to file, since the pgm file might loss some of the details.
 template<class T> int writeMatrix(string filename, Matrix<T> &target);
 template<class T> int readMatrix(string filename, Matrix<T> &target);
+
+// Add patches on the matrix of to make the dots more visiable
+template<class T> void add_patch(Matrix<T> &target, std::pair<int, int>* nodes, int nodes_num\
+    , T patch_value, int patch_size = 2);
 
 #include "matrix.tpp"
 
